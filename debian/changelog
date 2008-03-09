@@ -1,3 +1,10 @@
+sugar-datastore (0.8.0~git.13d354b-3) unstable; urgency=low
+
+  * Patch xapianindex to not import with-statement (now that we've
+    patched around using it).
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 17:46:58 +0100
+
 sugar-datastore (0.8.0~git.13d354b-2) unstable; urgency=low
 
   * Patch converter, datatore and backingstore to nest try: except: in

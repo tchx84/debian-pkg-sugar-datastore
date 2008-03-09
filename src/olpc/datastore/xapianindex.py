@@ -4,8 +4,6 @@ xapianindex
 maintain indexes on content
 
 """ 
-from __future__ import with_statement
-
 __author__ = 'Benjamin Saller <bcsaller@objectrealms.net>'
 __docformat__ = 'restructuredtext'
 __copyright__ = 'Copyright ObjectRealms, LLC, 2007'
