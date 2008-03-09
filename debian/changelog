@@ -4,6 +4,8 @@ sugar-datastore (0.8.0~git.13d354b-2) unstable; urgency=low
     try: except: finally: constructs, to support Python 2.4.
   * Patch xapianindex to manually acquire and release locks (not using
     with construct), to support Python 2.4.
+  * Drop documentation-related build-dependencies: Not yet integrated
+    with main build routines.
 
  -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 17:24:15 +0100
 
