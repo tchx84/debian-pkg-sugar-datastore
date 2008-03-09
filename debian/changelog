@@ -2,8 +2,10 @@ sugar-datastore (0.8.0~git.13d354b-2) unstable; urgency=low
 
   * Patch converter, datatore and backingstore to nest try: except: in
     try: except: finally: constructs, to support Python 2.4.
+  * Patch xapianindex to manually acquire and release locks (not using
+    with construct), to support Python 2.4.
 
- -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 15:22:55 +0100
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 17:24:15 +0100
 
 sugar-datastore (0.8.0~git.13d354b-1) unstable; urgency=low
 
