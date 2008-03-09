@@ -1,0 +1,29 @@
+Source: sugar-datastore
+Section: misc
+Priority: optional
+Maintainer: Jonas Smedegaard <dr@jones.dk>
+Build-Depends: cdbs (>= 0.4.23-1.1), libtool, automake1.10, autoconf, debhelper (>= 5), devscripts (>= 2.10.7), dh-buildinfo, python-all-dev, python-docutils, python-epydoc, python-central
+Standards-Version: 3.7.3
+Vcs-Git: git://git.debian.org/git/collab-maint/sugar-datastore.git
+Vcs-Browser: http://git.debian.org/?p=collab-maint/sugar-datastore.git;a=summary
+Homepage: http://wiki.laptop.org/go/Sugar
+XS-Python-Version: all
+
+Package: sugar-datastore
+Architecture: all
+Depends: ${shlibs:Depends}, ${python:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, sugar-base
+Recommends: poppler-utils | xpdf-utils, abiword | abiword-gnome
+Suggests: sugar
+Provides: ${python:Provides}
+XB-Python-Version: ${python:Versions}
+Description: Sugar graphical shell - datastore
+ Sugar is a graphical user interface aimed at children.
+ .
+ Sugar is mainly used as the interface for One Laptop Per Child (OLPC)
+ XO machines.
+ .
+ This package contains a simple log like datastore able to connect with
+ multiple backends.  The datastore supports connectionig and
+ disconnecting from backends on the fly to help the support the limit
+ space/memory characteristics of the OLPC system and the fact that
+ network services may become unavailable at times.

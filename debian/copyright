@@ -1,0 +1,34 @@
+This is Sugar Datastore packaged for Debian GNU systems.
+
+Upstream Git source: git://dev.laptop.org
+
+Upstream author: Benjamin Saller <bcsaller@objectrealms.net>
+
+Files: debian/*
+Copyright: © 2008 Jonas Smedegaard <dr@jones.dk>
+License: GPL-2+
+ The Debian packaging information is under the GPL, version 2 or later.
+
+Files: *
+Copyright: © 2007 ObjectRealms, LLC
+License: GPL-2+
+ __license__  = 'The GNU Public License V2+'
+
+Files: secore/*
+Copyright: © 2007 Lemur Consulting Ltd
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+Files: maint-helper.py
+Copyright: © 2007, Red Hat, Inc.
+License: GPL-2+
+ This program is free software; you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation; either version 2 of the License, or
+ (at your option) any later version.
+
+On Debian systems, the complete text of the GNU General Public License
+can be found in file "/usr/share/common-licenses/GPL".

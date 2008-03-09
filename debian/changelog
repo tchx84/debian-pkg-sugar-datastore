@@ -1,0 +1,5 @@
+sugar-datastore (0.8.0~git.13d354b-1) unstable; urgency=low
+
+  * Initial release. Closes: bug#444021.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 14:59:33 +0100
