@@ -258,9 +258,10 @@ class FileBackingStore(BackingStore):
         if os.path.exists(fn):
             fp = open(fn, 'r')
             try:
-                desc = pickle.load(fp)
-            except:
-                desc = {}
+                try:
+                    desc = pickle.load(fp)
+                except:
+                    desc = {}
             finally:
                 fp.close()
 

@@ -1,3 +1,10 @@
+sugar-datastore (0.8.0~git.13d354b-2) unstable; urgency=low
+
+  * Patch converter, datatore and backingstore to wrap try-except in
+    another try when using finally, to support Python 2.4.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 09 Mar 2008 15:22:55 +0100
+
 sugar-datastore (0.8.0~git.13d354b-1) unstable; urgency=low
 
   * Initial release. Closes: bug#444021.
