@@ -1,4 +1,4 @@
-#!/usr/bin/python2.4
+#!/usr/bin/python
 import os, sys
 
 # IF YOU ARE NOT GETTING THE RESULTS YOU EXPECT WHILE TESTING
