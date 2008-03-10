@@ -1,3 +1,9 @@
+sugar-datastore (0.8.0~git.13d354b-4) UNRELEASED; urgency=low
+
+  * Fix watch file (no tarball yet - just guessing the upcoming name).
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 10 Mar 2008 16:35:05 +0100
+
 sugar-datastore (0.8.0~git.13d354b-3) unstable; urgency=low
 
   * Patch xapianindex to not import with-statement (now that we've
