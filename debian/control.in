@@ -12,7 +12,7 @@ XS-Python-Version: all
 
 Package: sugar-datastore
 Architecture: all
-Depends: ${shlibs:Depends}, ${python:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, sugar-base
+Depends: ${shlibs:Depends}, ${python:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
 Recommends: poppler-utils | xpdf-utils, abiword | abiword-gnome
 Suggests: sugar
 Provides: ${python:Provides}

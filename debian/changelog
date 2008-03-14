@@ -3,6 +3,7 @@ sugar-datastore (0.8.0~git.13d354b-5) UNRELEASED; urgency=low
   * Pass over maintenance of the package to the OLPC team: Change
     Maintainer, and add myself to Uploaders.
   * Fix README.packaging to use "pull; fetch --tags" (not "pull -t").
+  * Depend on python-sugar (not sugar-base).
 
  -- Jonas Smedegaard <dr@jones.dk>  Tue, 11 Mar 2008 09:42:46 +0100
 
