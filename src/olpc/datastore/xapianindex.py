@@ -4,6 +4,8 @@ xapianindex
 maintain indexes on content
 
 """ 
+from __future__ import with_statement
+
 __author__ = 'Benjamin Saller <bcsaller@objectrealms.net>'
 __docformat__ = 'restructuredtext'
 __copyright__ = 'Copyright ObjectRealms, LLC, 2007'
@@ -171,8 +173,7 @@ class IndexManager(object):
 
         self.deltact += 1
         if force or self.deltact > FLUSH_THRESHOLD:
-            self._write_lock.acquire()
-            try:
+            with self._write_lock:
 
                 # TODO: Would be better to check if the device is present and
                 # don't try to flush if it's not.
@@ -184,8 +185,6 @@ class IndexManager(object):
 
                 #self.read_index.reopen()
                 self.deltact = 0
-            finally:
-                self._write_lock.release()
         else:
             self._flush_timeout = gobject.timeout_add(FLUSH_TIMEOUT * 1000,
                                                       self._flush_timeout_cb)
@@ -197,16 +196,13 @@ class IndexManager(object):
         # conversion/fulltext indexing can
         # happen in the thread
         if operation in (CREATE, UPDATE):
-            self._write_lock.acquire()
-            try:
+            with self._write_lock:
                 if operation is CREATE:
                     self.write_index.add(doc)
                     logger.info("created %s:%s" % (uid, vid))
                 elif operation is UPDATE:
                     self.write_index.replace(doc)
                     logger.info("updated %s:%s" % (uid, vid))
-            finally:
-                self._write_lock.release()
             self.flush()
 
             # Disable content indexing for Trial-3.
@@ -221,12 +217,9 @@ class IndexManager(object):
                 return
         elif operation is DELETE:
             # sync deletes
-            self._write_lock.acquire()
-            try:
+            with self._write_lock:
                 self.write_index.delete(uid)
                 logger.info("deleted content %s:%s" % (uid,vid))
-            finally:
-                self._write_lock.release()
             self.flush()
             return
 
@@ -253,8 +246,7 @@ class IndexManager(object):
                 continue
 
             try:
-                self._write_lock.acquire()
-                try:
+                with self._write_lock:
                     if operation is UPDATE:
                         # Here we handle the conversion of binary
                         # documents to plain text for indexing. This is
@@ -284,8 +276,6 @@ class IndexManager(object):
 
                     # tell the queue its complete 
                     self.queue.task_done()
-                finally:
-                    self._write_lock.release()
 
                 # we do flush on each record now
                 self.flush()
@@ -346,11 +336,8 @@ class IndexManager(object):
             d[p.key] = p
 
         if add_anything:
-            self._write_lock.acquire()
-            try:
+            with self._write_lock:
                 self.datamodel.apply(self)
-            finally:
-                self._write_lock.release()
             
         return d
 

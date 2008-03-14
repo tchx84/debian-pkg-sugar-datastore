@@ -1,11 +1,20 @@
-sugar-datastore (0.8.0~git.13d354b-5) UNRELEASED; urgency=low
+sugar-datastore (0.8.0~git.13d354b-5) unstable; urgency=low
 
   * Pass over maintenance of the package to the OLPC team: Change
     Maintainer, and add myself to Uploaders.
   * Fix README.packaging to use "pull; fetch --tags" (not "pull -t").
   * Depend on python-sugar (not sugar-base).
+  * Use quilt to handle patches.
+  * Add already applied patch 1001 to use unversioned Python hashbang in
+    getbuildpath.py script.
+  * Add already applied patch 1002 to nest try-except in
+    try-except-finally constructs, for Python < 2.5 compatibility.
+  * Add already applied patch 1003 to avoid fancy locking using "with"
+    statement, for Python < 2.5 compatibility.
+  * Semi-auto-update debian/control to update build-dependencies:
+      DEB_AUTO_UPDATE_DEBIAN_CONTROL=yes fakeroot debian/rules clean
 
- -- Jonas Smedegaard <dr@jones.dk>  Tue, 11 Mar 2008 09:42:46 +0100
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 14 Mar 2008 13:14:12 +0100
 
 sugar-datastore (0.8.0~git.13d354b-4) unstable; urgency=low
 
