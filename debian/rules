@@ -12,7 +12,7 @@ include /usr/share/cdbs/1/rules/debhelper.mk
 include debian/cdbs/1/rules/copyright-check.mk
 include debian/cdbs/1/rules/buildinfo.mk
 
-pkg = sugar-datastore
+pkg = python-sugar-datastore
 
 # Unittests seems broken currently: can't find own module olpc.datastore
 #DEB_MAKE_CHECK_TARGET = test

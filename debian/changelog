@@ -3,6 +3,10 @@ sugar-datastore (0.8.0~git.13d354b-5) unstable; urgency=low
   * Pass over maintenance of the package to the OLPC team: Change
     Maintainer, and add myself to Uploaders.
   * Fix README.packaging to use "pull; fetch --tags" (not "pull -t").
+  * Rename binary package sugar-datastore -> python-sugar-datastore, to
+    comply with Python policy (or maybe not: should each Python module
+    be packaged separately?).
+  * Change binary package to section python.
   * Depend on python-sugar (not sugar-base).
   * Use quilt to handle patches.
   * Add already applied patch 1001 to use unversioned Python hashbang in
