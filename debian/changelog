@@ -15,8 +15,8 @@ sugar-datastore (0.8.0~git.13d354b-5) unstable; urgency=low
     + Add local autotools.mk, autotools-vars.mk, makefile.mk and
       makefile-vars.mk providing multi-flavor build support needed by
       py-compile.mk.
+    + Add patchsys-quilt.mk.
     + README.cdbs-tweaks updated to mention the above.
-  * Use quilt to handle patches.
   * Add already applied patch 1001 to use unversioned Python hashbang in
     getbuildpath.py script.
   * Add already applied patch 1002 to nest try-except in
