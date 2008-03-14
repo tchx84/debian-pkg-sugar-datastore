@@ -11,6 +11,7 @@ sugar-datastore (0.8.0~git.13d354b-5) unstable; urgency=low
     try-except-finally constructs, for Python < 2.5 compatibility.
   * Add already applied patch 1003 to avoid fancy locking using "with"
     statement, for Python < 2.5 compatibility.
+  * Drop empty usr/lib cleanup, now handled by puthon-central.
   * Semi-auto-update debian/control to update build-dependencies:
       DEB_AUTO_UPDATE_DEBIAN_CONTROL=yes fakeroot debian/rules clean
 

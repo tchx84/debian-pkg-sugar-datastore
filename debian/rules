@@ -29,10 +29,6 @@ clean::
 binary-install/$(pkg)::
 	dh_pycentral
 
-# Drop created dir if empty to please lintian
-binary-post-install/$(pkg)::
-	rmdir --ignore-fail-on-non-empty --parents $(DEB_DESTDIR)/usr/lib
-
 # Needed by upstream build process
 CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-all-dev
 
