@@ -7,7 +7,9 @@ DEB_AUTO_UPDATE_ACLOCAL = 1.10
 DEB_AUTO_UPDATE_AUTOMAKE = 1.10
 DEB_AUTO_UPDATE_AUTOCONF = 2.61
 DEB_AUTO_UPDATE_LIBTOOL = pre
-include /usr/share/cdbs/1/class/autotools.mk
+
+DEB_PYTHON_SYSTEM = pycentral
+include debian/cdbs/1/class/py-compile.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include debian/cdbs/1/rules/copyright-check.mk
 include debian/cdbs/1/rules/buildinfo.mk
@@ -26,12 +28,6 @@ clean::
 	rm -f aclocal.m4 compile config.guess config.sub configure depcomp install-sh ltmain.sh missing
 	find -name Makefile.in -exec rm '{}' ';'
 
-binary-install/$(pkg)::
-	dh_pycentral
-
-# Needed by upstream build process
-CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-all-dev
-
 # Needed by upstream documentation build process
 # (disabled: not yet integrated with main build routines)
 #CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-docutils, python-epydoc
@@ -39,9 +35,6 @@ CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-all-dev
 # Needed by upstream unittests
 # (disabled: seems broken - can't find own module olpc.datastore)
 #CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-setuptools, python-dbus, python-gobject, sugar-toolkit
-
-# Needed for our packaging routines
-CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-central
 
 # Replace virtual automake1.10 build-dependency with automake
 CDBS_BUILD_DEPENDS := $(shell echo '$(CDBS_BUILD_DEPENDS)' | sed -e 's/\bautomake1\.10\b/automake/')
