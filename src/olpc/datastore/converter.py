@@ -74,18 +74,17 @@ class subprocessconverter(object):
         cmd = self.raw % data
 
         try:
-            try:
-                cmd = cmd.split()
-                # the stderr capture here will hide glib error messages
-                # from converters which shouldn't be generating output anyway
-                retcode = subprocess.call(cmd, stderr=subprocess.PIPE)
-                if retcode: return None
-                return codecs.open(target, 'r', 'utf-8')
-            except UnicodeDecodeError:
-                # The data was an unknown type but couldn't be understood
-                # as text so we don't attempt to index it. This most
-                # likely means its just an unknown binary format.
-                return None
+            cmd = cmd.split()
+            # the stderr capture here will hide glib error messages
+            # from converters which shouldn't be generating output anyway
+            retcode = subprocess.call(cmd, stderr=subprocess.PIPE)
+            if retcode: return None
+            return codecs.open(target, 'r', 'utf-8')
+        except UnicodeDecodeError:
+            # The data was an unknown type but couldn't be understood
+            # as text so we don't attempt to index it. This most
+            # likely means its just an unknown binary format.
+            return None
         finally:
             # we unlink the file as its already been opened for
             # reading
