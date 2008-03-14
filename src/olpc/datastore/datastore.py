@@ -412,12 +412,11 @@ class DataStore(dbus.service.Object):
             backingstore = content.backingstore
             backingstore.current_user_id = dbus.Bus().get_unix_user(sender)
             try:
-                try:
-                    # Retrieving the file path for the file will cause the file to be
-                    # copied or linked to a directory accessible by the caller.
-                    file_path = content.filename
-                except AttributeError:
-                    file_path = ''
+                # Retrieving the file path for the file will cause the file to be
+                # copied or linked to a directory accessible by the caller.
+                file_path = content.filename
+            except AttributeError:
+                file_path = ''
             finally:
                 backingstore.current_user_id = None
         return file_path
