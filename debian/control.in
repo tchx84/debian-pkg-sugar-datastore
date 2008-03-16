@@ -24,7 +24,7 @@ Description: Sugar graphical shell - datastore
  XO machines.
  .
  This package contains a simple log like datastore able to connect with
- multiple backends.  The datastore supports connectionig and
- disconnecting from backends on the fly to help the support the limit
- space/memory characteristics of the OLPC system and the fact that
- network services may become unavailable at times.
+ multiple backends.  The datastore supports connecting and disconnecting
+ from backends on the fly to help the support the limit space/memory
+ characteristics of the OLPC system and the fact that network services
+ may become unavailable at times.

@@ -1,3 +1,9 @@
+sugar-datastore (0.8.0~git.13d354b-8) UNRELEASED; urgency=low
+
+  * Fix typo in long description.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 16 Mar 2008 21:39:09 +0100
+
 sugar-datastore (0.8.0~git.13d354b-7) unstable; urgency=low
 
   * Rename binary package to python-olpc-datastore (not sugar-datastore
