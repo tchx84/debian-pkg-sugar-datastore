@@ -7,6 +7,7 @@ sugar-datastore (0.8.0~git.13d354b-7) unstable; urgency=low
     for Debian).
   * Update debian/copyright to advertise this packaging as "Python
     module OLPC Datastore" (not "Sugar Datastore").
+  * Fix email address of OLPC Alioth team.
 
  -- Jonas Smedegaard <dr@jones.dk>  Sun, 16 Mar 2008 13:23:29 +0100
 
