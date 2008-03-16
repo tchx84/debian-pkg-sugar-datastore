@@ -28,6 +28,7 @@ pre-build::
 # Cleanup automade files
 clean::
 	rm -f aclocal.m4 compile config.guess config.sub configure depcomp install-sh ltmain.sh missing
+	rm -f py-compile
 	find -name Makefile.in -exec rm '{}' ';'
 
 # Needed by upstream documentation build process
