@@ -10,7 +10,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/sugar-datastore.git;a=summary
 Homepage: http://wiki.laptop.org/go/Sugar
 XS-Python-Version: all
 
-Package: python-sugar-datastore
+Package: python-olpc-datastore
 Architecture: all
 Depends: ${shlibs:Depends}, ${python:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
 Recommends: poppler-utils | xpdf-utils, abiword | abiword-gnome
