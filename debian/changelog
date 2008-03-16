@@ -5,6 +5,7 @@ sugar-datastore (0.8.0~git.13d354b-6) UNRELEASED; urgency=low
     + Update python-vars.mk and makefile.mk for improved DEB_*PACKAGES
       and build-dependency resolving.
     + Cosmetic updates to README.cdbs-tweaks.
+  * Fix patch 1003 to not strip declaring self:_write_lock.
 
  -- Jonas Smedegaard <dr@jones.dk>  Sat, 15 Mar 2008 21:11:22 +0100
 

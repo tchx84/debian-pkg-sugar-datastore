@@ -11,14 +11,6 @@ index 888bd26..c2506cb 100644
  __author__ = 'Benjamin Saller <bcsaller@objectrealms.net>'
  __docformat__ = 'restructuredtext'
  __copyright__ = 'Copyright ObjectRealms, LLC, 2007'
-@@ -85,7 +83,6 @@ class IndexManager(object):
-         self.backingstore = None
-         
-         self.fields = set()
--        self._write_lock = threading.Lock()
- 
-         self.deltact = 0 # delta count
-         self._flush_timeout = None
 @@ -173,7 +170,8 @@ class IndexManager(object):
  
          self.deltact += 1
