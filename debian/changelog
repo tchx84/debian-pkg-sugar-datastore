@@ -1,10 +1,10 @@
-sugar-datastore (0.8.0~git.13d354b-8) UNRELEASED; urgency=low
+sugar-datastore (0.8.0~git.13d354b-8) unstable; urgency=low
 
   * Fix typo in long description.
   * Add patches 1004 and 1005 to avoid queue.join and queue.task_done,
     and check_call, all of them unavailable in Python < 2.5.
 
- -- Jonas Smedegaard <dr@jones.dk>  Sun, 23 Mar 2008 12:38:51 +0100
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 23 Mar 2008 15:10:46 +0100
 
 sugar-datastore (0.8.0~git.13d354b-7) unstable; urgency=low
 
