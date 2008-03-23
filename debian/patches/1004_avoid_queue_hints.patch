@@ -1,0 +1,41 @@
+diff --git a/src/olpc/datastore/xapianindex.py b/src/olpc/datastore/xapianindex.py
+index b3da0cc..8cf6a5a 100644
+--- a/src/olpc/datastore/xapianindex.py
++++ b/src/olpc/datastore/xapianindex.py
+@@ -151,8 +151,7 @@ class IndexManager(object):
+         
+     def stopIndexer(self, force=False):
+         if not self.indexer_running: return 
+-        if not force: self.queue.join()
+-        self.indexer_running = False
++        if force: self.indexer_running = False
+         # should terminate after the current task
+         self.indexer.join()
+ 
+@@ -250,6 +249,7 @@ class IndexManager(object):
+                 uid, vid, doc, operation, filestuff = data
+             except Empty:
+                 #time.sleep(1.0)
++                self.indexer_running = False
+                 continue
+ 
+             try:
+@@ -281,9 +281,6 @@ class IndexManager(object):
+                             logger.warning("""Conversion process failed for document %s %s""" % (uid, filename))
+                     else:
+                         logger.warning("Unknown indexer operation ( %s: %s)" % (uid, operation))
+-
+-                    # tell the queue its complete 
+-                    self.queue.task_done()
+                 finally:
+                     self._write_lock.release()
+ 
+@@ -297,7 +294,7 @@ class IndexManager(object):
+         """Intentionally block until the indexing is complete. Used
+         primarily in testing.
+         """
+-        self.queue.join()
++        self.indexer.join()
+         self.flush()
+     
+     #
