@@ -1,3 +1,9 @@
+sugar-datastore (0.8.0~git.13d354b-9) unstable; urgency=low
+
+  * Suggest (not recommend) abiword and poppler-utils.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 11 Apr 2008 19:17:30 +0200
+
 sugar-datastore (0.8.0~git.13d354b-8) unstable; urgency=low
 
   * Fix typo in long description.
