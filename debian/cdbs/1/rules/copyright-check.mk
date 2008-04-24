@@ -43,6 +43,7 @@ debian/stamp-copyright-check:
 	licensecheck -c '$(DEB_COPYRIGHT_CHECK_REGEX)' -r --copyright -i '$(DEB_COPYRIGHT_CHECK_IGNORE_REGEX)' * \
 		| LC_ALL=C perl -e \
 	'$$n=0; while (<>) {'\
+	'	s/[^[:print:]]//g;'\
 	'	if (/^([^:\s][^:]+):[\s]+(\S.*?)\s*$$/) {'\
 	'		$$files[$$n]{name}=$$1;'\
 	'		$$files[$$n]{license}=$$2;'\
@@ -65,7 +66,7 @@ debian/stamp-copyright-check:
 	'			||'\
 	'			$$a cmp $$b'\
 	'		} keys %patternfiles ) {'\
-	'	print "$$pattern: ", join(", ", sort @{ $$patternfiles{$$pattern} }), "\n";'\
+	'	print "$$pattern: ", join("\n\t", sort @{ $$patternfiles{$$pattern} }), "\n";'\
 	'};'\
 		> debian/copyright_newhints
 	@patterncount="`cat debian/copyright_newhints | sed 's/^[^:]*://' | LANG=C sort -u | grep . -c -`"; \

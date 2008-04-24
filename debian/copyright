@@ -1,6 +1,6 @@
 This is Python module OLPC Datastore packaged for Debian GNU systems.
 
-Upstream Git source: git://dev.laptop.org
+Upstream Git source: git://dev.laptop.org/projects/datastore
 
 Upstream author: Benjamin Saller <bcsaller@objectrealms.net>
 
