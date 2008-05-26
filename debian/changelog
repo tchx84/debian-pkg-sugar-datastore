@@ -1,3 +1,9 @@
+sugar-datastore (0.8.1-3) UNRELEASED; urgency=low
+
+  * Add URL to upstream tarball source in debian/copyright.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 26 May 2008 14:30:28 +0200
+
 sugar-datastore (0.8.1-2) unstable; urgency=low
 
   * Really update build-dependencies as promised in 0.8.1-1.

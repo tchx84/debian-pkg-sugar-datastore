@@ -1,5 +1,7 @@
 This is Python module OLPC Datastore packaged for Debian GNU systems.
 
+Upstream source: http://dev.laptop.org/pub/sugar/sources/sugar-datastore/
+
 Upstream Git source: git://dev.laptop.org/projects/datastore
 
 Upstream author: Benjamin Saller <bcsaller@objectrealms.net>
