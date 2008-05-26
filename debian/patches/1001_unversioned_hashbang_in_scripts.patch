@@ -1,8 +1,0 @@
---- sugar-datastore-0.8.0~git.13d354b.orig/docs/getbuildpath.py
-+++ sugar-datastore-0.8.0~git.13d354b/docs/getbuildpath.py
-@@ -1,4 +1,4 @@
--#!/usr/bin/python2.4
-+#!/usr/bin/python
- import os, sys
- 
- # IF YOU ARE NOT GETTING THE RESULTS YOU EXPECT WHILE TESTING

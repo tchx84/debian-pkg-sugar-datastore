@@ -1,8 +1,9 @@
 diff --git a/src/olpc/datastore/bin_copy.py b/src/olpc/datastore/bin_copy.py
-index 6cf7036..a38b395 100644
+index 6cf7036..3440b1b 100644
 --- a/src/olpc/datastore/bin_copy.py
 +++ b/src/olpc/datastore/bin_copy.py
-@@ -3,14 +3,12 @@ import os, subprocess
+@@ -2,15 +2,13 @@ import os, subprocess
+ 
  
  def bin_copy(src, dest):
 -    try:

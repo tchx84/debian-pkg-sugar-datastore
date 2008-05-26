@@ -2,6 +2,8 @@ sugar-datastore (0.8.1-1) unstable; urgency=low
 
   * New upstream release (only version number bumped, compared to prior
     Git snapshot release).
+  * Drop patch 1001 against no longer included doc file.
+  * Unfuzz patch 1005.
   * Update copyright-check (only files dropped or replaced with
     auto-generated ones).
   * Update local cdbs snippets:
