@@ -1,3 +1,15 @@
+sugar-datastore (0.8.1-1) unstable; urgency=low
+
+  * New upstream release (only version number bumped, compared to prior
+    Git snapshot release).
+  * Update local cdbs snippets:
+    + Use upstream-tarball.mk to track upstream source releases.
+    + Drop use of autotools.
+  * Semi-auto-update debian/control to update build-dependencies:
+      DEB_AUTO_UPDATE_DEBIAN_CONTROL=yes fakeroot debian/rules clean
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 26 May 2008 11:28:42 +0200
+
 sugar-datastore (0.8.0~git.13d354b-11) unstable; urgency=low
 
   * Bump debhelper compatibility level to 6 (was 5).
