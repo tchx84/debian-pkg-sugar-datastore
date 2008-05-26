@@ -1,3 +1,9 @@
+sugar-datastore (0.8.1-2) unstable; urgency=low
+
+  * Really update build-dependencies as promised in 0.8.1-1.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 26 May 2008 12:23:09 +0200
+
 sugar-datastore (0.8.1-1) unstable; urgency=low
 
   * New upstream release (only version number bumped, compared to prior
