@@ -1,6 +1,6 @@
 --- sugar-datastore-0.8.0~git.13d354b.orig/src/olpc/datastore/backingstore.py
 +++ sugar-datastore-0.8.0~git.13d354b/src/olpc/datastore/backingstore.py
-@@ -258,9 +258,10 @@
+@@ -269,9 +269,10 @@
          if os.path.exists(fn):
              fp = open(fn, 'r')
              try:
@@ -48,7 +48,7 @@
              # reading
 --- sugar-datastore-0.8.0~git.13d354b.orig/src/olpc/datastore/datastore.py
 +++ sugar-datastore-0.8.0~git.13d354b/src/olpc/datastore/datastore.py
-@@ -412,11 +412,12 @@
+@@ -394,11 +394,12 @@
              backingstore = content.backingstore
              backingstore.current_user_id = dbus.Bus().get_unix_user(sender)
              try:
