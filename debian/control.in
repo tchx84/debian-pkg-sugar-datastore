@@ -12,7 +12,7 @@ XS-Python-Version: all
 
 Package: python-olpc-datastore
 Architecture: all
-Depends: ${shlibs:Depends}, ${python:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
+Depends: ${shlibs:Depends}, ${python:Depends}, ${misc:Depends}, python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
 Suggests: sugar, poppler-utils | xpdf-utils, abiword | abiword-gnome
 Provides: ${python:Provides}
 XB-Python-Version: ${python:Versions}
