@@ -46,7 +46,7 @@ DEB_PHONY_RULES += makefile-clean $(cdbs_make_clean_nonstamps)
 
 pre-build::
 	$(if $(cdbs_make_multibuilds),mkdir -p debian/stamp-makefile-build debian/stamp-makefile-install)
-	$(and $(cdbs_make_multibuilds),$(not $(findstring nocheck,$(DEB_BUILD_OPTIONS))),$(DEB_MAKE_CHECK_TARGET),mkdir -p debian/stamp-makefile-check)
+	$(and $(cdbs_make_multibuilds),$(DEB_MAKE_CHECK_TARGET),mkdir -p debian/stamp-makefile-check)
 
 common-build-arch common-build-indep:: $(cdbs_make_build_stamps)
 $(cdbs_make_build_stamps):
@@ -74,7 +74,7 @@ $(cdbs_make_check_stamps) : debian/stamp-makefile-check% : debian/stamp-makefile
 	$(if $(DEB_MAKE_CHECK_TARGET),touch $@)
 
 makefile-clean::
-	$(if $(DEB_MAKE_CHECK_TARGET),rm -f debian/stamp-makefile-check)
+	$(if $(DEB_MAKE_CHECK_TARGET),$(if $(cdbs_make_multibuilds),-rmdir --ignore-fail-on-non-empty debian/stamp-makefile-check,rm -f debian/stamp-makefile-check))
 
 $(cdbs_make_clean_nonstamps)::
 	$(if $(cdbs_make_multibuilds),rm -f $(@:makefile-clean%=debian/stamp-makefile-check%))
