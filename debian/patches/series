@@ -1,3 +1,4 @@
+0001_fix_xapian_overflow.patch
 1002_avoid_try-except-finally.patch
 1003_avoid_with_statement.patch
 1004_avoid_queue_hints.patch

@@ -1,0 +1,13 @@
+diff --git a/secore/searchconnection.py b/secore/searchconnection.py
+index 79fa509..4f77941 100644
+--- a/secore/searchconnection.py
++++ b/secore/searchconnection.py
+@@ -607,7 +607,7 @@ class SearchConnection(object):
+         # Repeat the search until we don't get a DatabaseModifiedError
+         while True:
+             try:
+-                mset = enq.get_mset(startrank, maxitems, checkatleast)
++                mset = enq.get_mset(startrank, maxitems, min(0x7FFFFFFF, checkatleast))
+                 break
+             except _xapian.DatabaseModifiedError, e:
+                 self.reopen()
