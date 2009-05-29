@@ -33,5 +33,9 @@ pkg = python-olpc-datastore
 # (temporarily disabled: python-sugar-toolkit is not yet in Debian)
 #CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-setuptools, python-dbus, python-gobject, python-sugar-toolkit
 
+# Needed (always/seldom) at runtime
+CDBS_DEPENDS = python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
+CDBS_SUGGESTS = sugar, poppler-utils | xpdf-utils, abiword | abiword-gnome
+
 # Resolve, cleanup and apply CDBS-declared dependencies
 include debian/cdbs/1/rules/package-relations.mk
