@@ -41,17 +41,6 @@ DEB_UPSTREAM_URL = http://download.sugarlabs.org/sources/sucrose/glucose/sugar-d
 DEB_UPSTREAM_TARBALL_EXTENSION = tar.bz2
 DEB_UPSTREAM_TARBALL_MD5 = e57580e9fd44ecc2cb7a947dd8854817
 
-# Unittests temporarily disabled: python-sugar-toolkit is not yet in Debian
-#DEB_MAKE_CHECK_TARGET = test
-
-# Needed by upstream documentation build process
-# (disabled: not yet integrated with main build routines)
-#CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-docutils, python-epydoc
-
-# Needed by upstream unittests
-# (temporarily disabled: python-sugar-toolkit is not yet in Debian)
-#CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-setuptools, python-dbus, python-gobject, python-sugar-toolkit
-
 # Needed (always/seldom) at runtime
 CDBS_DEPENDS = python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar-$(pkgbranch)
 CDBS_SUGGESTS = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
