@@ -11,7 +11,7 @@ Homepage: http://wiki.sugarlabs.org/go/Sugar
 XS-Python-Version: >= 2.5
 
 Package: python-carquinyol-0.84
-Architecture: all
+Architecture: any
 Depends: ${shlibs:Depends}, ${python:Depends}, ${cdbs:Depends}, ${misc:Depends}
 Suggests: ${cdbs:Suggests}
 Provides: ${python:Provides}, ${cdbs:Provides}
