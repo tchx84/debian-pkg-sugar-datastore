@@ -7,6 +7,20 @@ Files: Makefile.am
 	bin/copy-to-journal
 	bin/datastore-service
 	configure.ac
+	debian/README.source
+	debian/TODO
+	debian/compat
+	debian/control
+	debian/control.in
+	debian/gbp.conf
+	debian/patches/0001_fix_xapian_overflow.patch
+	debian/patches/1002_avoid_try-except-finally.patch
+	debian/patches/1004_avoid_queue_hints.patch
+	debian/patches/1005_avoid_check_call.patch
+	debian/patches/README
+	debian/patches/series
+	debian/pycompat
+	debian/watch
 	etc/Makefile.am
 	etc/org.laptop.sugar.DataStore.service.in
 	secore/Makefile.am
@@ -43,13 +57,28 @@ Files: Makefile.in
 Copyright: 1994-2002
 License: UNKNOWN (GENERATED FILE)
 
-Files: src/olpc/datastore/backingstore.py
+Files: debian/patches/1003_avoid_with_statement.patch
+	src/olpc/datastore/backingstore.py
 	src/olpc/datastore/converter.py
 	src/olpc/datastore/datastore.py
 	src/olpc/datastore/model.py
 	src/olpc/datastore/xapianindex.py
 Copyright: ObjectRealms, LLC, 2007'
 License: UNKNOWN
+
+Files: debian/cdbs/1/class/autotools-vars.mk
+	debian/cdbs/1/class/autotools.mk
+	debian/cdbs/1/class/makefile-vars.mk
+	debian/cdbs/1/class/makefile.mk
+Copyright: 2002-2003, Colin Walters <walters@debian.org>
+	2008, Jonas Smedegaard <dr@jones.dk>
+License: GPL
+
+Files: debian/cdbs/1/class/python-autotools.mk
+	debian/cdbs/1/class/python-vars.mk
+	debian/cdbs/1/rules/package-relations.mk
+Copyright: 2008, Jonas Smedegaard <dr@jones.dk>
+License: GPL
 
 Files: missing
 Copyright: 1996-1997, 1999-2000, 2002-2006
@@ -58,6 +87,22 @@ License: GPL (GENERATED FILE)
 Files: py-compile
 Copyright: 2000-2001, 2003-2005, Free Software Foundation, Inc
 License: GPL (GENERATED FILE)
+
+Files: debian/cdbs/1/rules/buildinfo.mk
+Copyright: 2004-2007, Jonas Smedegaard <dr@jones.dk>
+License: GPL
+
+Files: debian/cdbs/1/rules/upstream-tarball.mk
+Copyright: 2007-2008, Jonas Smedegaard <dr@jones.dk>
+License: GPL
+
+Files: debian/rules
+Copyright: 2008-2009, Jonas Smedegaard <dr@jones.dk>
+License: GPL
+
+Files: debian/cdbs/1/rules/copyright-check.mk
+Copyright: \s*(\S.*?)\s*\
+License: GPL
 
 Files: secore/errors.py
 Copyright: 2007, Lemur Consulting Ltd
