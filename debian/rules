@@ -16,11 +16,13 @@ include debian/cdbs/1/class/python-autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 include debian/cdbs/1/rules/buildinfo.mk
 
+pkgbase = python-olpc-datastore
+pkgbranch = 0.84
+pkg = $(pkgbase)-$(pkgbranch)
+
 DEB_UPSTREAM_URL = http://download.sugarlabs.org/sources/sucrose/glucose/sugar-datastore/$(DEB_UPSTREAM_PACKAGE)
 DEB_UPSTREAM_TARBALL_EXTENSION = tar.bz2
 DEB_UPSTREAM_TARBALL_MD5 = cf07fc14938df7f343b9efb552bbeaaa
-
-pkg = python-olpc-datastore
 
 # Unittests temporarily disabled: python-sugar-toolkit is not yet in Debian
 #DEB_MAKE_CHECK_TARGET = test
@@ -34,8 +36,13 @@ pkg = python-olpc-datastore
 #CDBS_BUILD_DEPENDS := $(CDBS_BUILD_DEPENDS), python-setuptools, python-dbus, python-gobject, python-sugar-toolkit
 
 # Needed (always/seldom) at runtime
-CDBS_DEPENDS = python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar
-CDBS_SUGGESTS = sugar, poppler-utils | xpdf-utils, abiword | abiword-gnome
+CDBS_DEPENDS = python-gobject, python-dbus, python-gnome2, python-xapian, python-sugar-$(pkgbranch)
+CDBS_SUGGESTS = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
+
+# Ensure only one variant is installed at a time (Debian Policy 7.6.2)
+CDBS_PROVIDES := $(pkgbase)
+CDBS_CONFLICTS := $(pkgbase)
+CDBS_REPLACES := $(pkgbase)
 
 # Resolve, cleanup and apply CDBS-declared dependencies
 include debian/cdbs/1/rules/package-relations.mk
