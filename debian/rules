@@ -46,9 +46,15 @@ CDBS_DEPENDS = python-gobject, python-dbus, python-gnome2, python-xapian, python
 CDBS_SUGGESTS = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
 
 # Ensure only one variant is installed at a time (Debian Policy 7.6.2)
-CDBS_PROVIDES := $(pkgbase)
-CDBS_CONFLICTS := $(pkgbase)
-CDBS_REPLACES := $(pkgbase)
+CDBS_PROVIDES = $(pkgbase)
+CDBS_CONFLICTS = $(pkgbase)
+CDBS_REPLACES = $(pkgbase)
+
+# Transitional quirk: python-olpc-datastore renamed to python-carquinyol
+# (unneeded since Squeeze: can be dropped after Squeeze+1)
+CDBS_PROVIDES += , python-olpc-datastore
+CDBS_CONFLICTS += , python-olpc-datastore
+CDBS_REPLACES += , python-olpc-datastore
 
 # Resolve, cleanup and apply CDBS-declared dependencies
 include debian/cdbs/1/rules/package-relations.mk
