@@ -10,7 +10,7 @@ Vcs-Browser: http://git.debian.org/?p=collab-maint/sugar-datastore.git;a=summary
 Homepage: http://wiki.sugarlabs.org/go/Sugar
 XS-Python-Version: all
 
-Package: python-olpc-datastore-0.84
+Package: python-carquinyol-0.84
 Architecture: all
 Depends: ${shlibs:Depends}, ${python:Depends}, ${cdbs:Depends}, ${misc:Depends}
 Suggests: ${cdbs:Suggests}
