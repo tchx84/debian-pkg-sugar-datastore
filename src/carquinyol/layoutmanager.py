@@ -17,11 +17,13 @@
 import os
 
 MAX_QUERY_LIMIT = 40960
+CURRENT_LAYOUT_VERSION = 2
 
 class LayoutManager(object):
     """Provide the logic about how entries are stored inside the datastore
     directory
-    """ 
+    """
+
     def __init__(self):
         profile = os.environ.get('SUGAR_PROFILE', 'default')
         base_dir = os.path.join(os.path.expanduser('~'), '.sugar', profile)
@@ -30,13 +32,19 @@ class LayoutManager(object):
 
         if not os.path.exists(self._root_path):
             os.makedirs(self._root_path)
-            self.set_version(1)
 
         self._create_if_needed(self.get_checksums_dir())
         self._create_if_needed(self.get_queue_path())
 
         index_updated_path = os.path.join(self._root_path, 'index_updated')
-        self._index_updated = os.path.exists(index_updated_path)
+        if os.path.exists(index_updated_path):
+            self._index_updated = True
+        elif self._is_empty():
+            open(index_updated_path, 'w').close()
+            self.set_version(CURRENT_LAYOUT_VERSION)
+            self._index_updated = True
+        else:
+            self._index_updated = False
 
     def _create_if_needed(self, path):
         if not os.path.exists(path):
@@ -57,6 +65,12 @@ class LayoutManager(object):
         # os.path.join() is just too slow
         return '%s/%s/%s' % (self._root_path, uid[:2], uid)
 
+    def get_data_path(self, uid):
+        return '%s/%s/%s/data' % (self._root_path, uid[:2], uid)
+
+    def get_metadata_path(self, uid):
+        return '%s/%s/%s/metadata' % (self._root_path, uid[:2], uid)
+
     def get_root_path(self):
         return self._root_path
 
@@ -65,7 +79,7 @@ class LayoutManager(object):
 
     def get_checksums_dir(self):
         return os.path.join(self._root_path, 'checksums')
- 
+
     def get_queue_path(self):
         return os.path.join(self.get_checksums_dir(), 'queue')
 
@@ -93,10 +107,17 @@ class LayoutManager(object):
                         uids.append(g)
         return uids
 
+    def _is_empty(self):
+        for f in os.listdir(self._root_path):
+            if os.path.isdir(os.path.join(self._root_path, f)) and len(f) == 2:
+                for g in os.listdir(os.path.join(self._root_path, f)):
+                    if len(g) == 36:
+                        return False
+        return True
+
 _instance = None
 def get_instance():
     global _instance
     if _instance is None:
         _instance = LayoutManager()
     return _instance
-

@@ -15,7 +15,7 @@
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 """Transform one DataStore directory in a newer format.
-""" 
+"""
 
 import os
 import logging
@@ -28,6 +28,7 @@ import cjson
 from carquinyol import layoutmanager
 
 DATE_FORMAT = '%Y-%m-%dT%H:%M:%S'
+
 
 def migrate_from_0():
     logging.info('Migrating datastore from version 0 to version 1')
@@ -42,14 +43,13 @@ def migrate_from_0():
         if ext != '.metadata':
             continue
 
-        logging.debug('Migrating entry %r' % uid)
+        logging.debug('Migrating entry %r', uid)
         try:
             _migrate_metadata(root_path, old_root_path, uid)
             _migrate_file(root_path, old_root_path, uid)
             _migrate_preview(root_path, old_root_path, uid)
         except Exception:
-            logging.error('Error while migrating entry %r: %s\n' % \
-                          (uid, traceback.format_exc()))
+            logging.exception('Error while migrating entry %r', uid)
 
     # Just be paranoid, it's cheap.
     if old_root_path.endswith('datastore/store'):
@@ -57,9 +57,10 @@ def migrate_from_0():
 
     logging.info('Migration finished')
 
+
 def _migrate_metadata(root_path, old_root_path, uid):
     dir_path = layoutmanager.get_instance().get_entry_path(uid)
-    metadata_path = os.path.join(dir_path, 'metadata')
+    metadata_path = layoutmanager.get_instance().get_metadata_path(uid)
     os.makedirs(metadata_path)
 
     old_metadata_path = os.path.join(old_root_path, uid + '.metadata')
@@ -84,19 +85,19 @@ def _migrate_metadata(root_path, old_root_path, uid):
             finally:
                 f.close()
         except Exception:
-            logging.error(
-                    'Error while migrating property %s of entry %s: %s\n' % \
-                    (key, uid, traceback.format_exc()))
+            logging.exception(
+                    'Error while migrating property %s of entry %s', key, uid)
+
 
 def _migrate_file(root_path, old_root_path, uid):
     if os.path.exists(os.path.join(old_root_path, uid)):
-        dir_path = layoutmanager.get_instance().get_entry_path(uid)
+        new_data_path = layoutmanager.get_instance().get_data_path(uid)
         os.rename(os.path.join(old_root_path, uid),
-                  os.path.join(dir_path, 'data'))
+                  new_data_path)
+
 
 def _migrate_preview(root_path, old_root_path, uid):
     dir_path = layoutmanager.get_instance().get_entry_path(uid)
-    metadata_path = os.path.join(dir_path, 'metadata')
+    metadata_path = layoutmanager.get_instance().get_metadata_path(uid)
     os.rename(os.path.join(old_root_path, 'preview', uid),
               os.path.join(metadata_path, 'preview'))
-
