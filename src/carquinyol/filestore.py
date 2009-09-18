@@ -23,28 +23,30 @@ import gobject
 
 from carquinyol import layoutmanager
 
+
 class FileStore(object):
     """Handle the storage of one file per entry.
     """
+
     # TODO: add protection against store and retrieve operations on entries
     # that are being processed async.
 
     def store(self, uid, file_path, transfer_ownership, completion_cb):
         """Store a file for a given entry.
-           
+
         """
         dir_path = layoutmanager.get_instance().get_entry_path(uid)
         if not os.path.exists(dir_path):
             os.makedirs(dir_path)
 
-        destination_path = os.path.join(dir_path, 'data')
+        destination_path = layoutmanager.get_instance().get_data_path(uid)
         if file_path:
             if not os.path.isfile(file_path):
                 raise ValueError('No file at %r' % file_path)
             if transfer_ownership:
                 try:
-                    logging.debug('FileStore moving from %r to %r' % \
-                                  (file_path, destination_path))
+                    logging.debug('FileStore moving from %r to %r', file_path,
+                        destination_path)
                     os.rename(file_path, destination_path)
                     completion_cb()
                 except OSError, e:
@@ -68,22 +70,22 @@ class FileStore(object):
 
     def _async_copy(self, file_path, destination_path, completion_cb):
         """Start copying a file asynchronously.
-        
+
         """
-        logging.debug('FileStore copying from %r to %r' % \
-                      (file_path, destination_path))
+        logging.debug('FileStore copying from %r to %r', file_path,
+            destination_path)
         async_copy = AsyncCopy(file_path, destination_path, completion_cb)
         async_copy.start()
 
     def retrieve(self, uid, user_id, extension):
-        """Place the file associated to a given entry into a directory where the
-            user can read it. The caller is reponsible for deleting this file.
-        
+        """Place the file associated to a given entry into a directory
+           where the user can read it. The caller is reponsible for
+           deleting this file.
+
         """
-        dir_path = layoutmanager.get_instance().get_entry_path(uid)
-        file_path = os.path.join(dir_path, 'data')
+        file_path = layoutmanager.get_instance().get_data_path(uid)
         if not os.path.exists(file_path):
-            logging.debug('Entry %r doesnt have any file' % uid)
+            logging.debug('Entry %r doesnt have any file', uid)
             return ''
 
         use_instance_dir = os.path.exists('/etc/olpc-security') and \
@@ -91,8 +93,8 @@ class FileStore(object):
         if use_instance_dir:
             if not user_id:
                 raise ValueError('Couldnt determine the current user uid.')
-            destination_dir = os.path.join(os.environ['HOME'], 'isolation', '1',
-                                           'uid_to_instance_dir', str(user_id))
+            destination_dir = os.path.join(os.environ['HOME'], 'isolation',
+                '1', 'uid_to_instance_dir', str(user_id))
         else:
             profile = os.environ.get('SUGAR_PROFILE', 'default')
             destination_dir = os.path.join(os.path.expanduser('~'), '.sugar',
@@ -142,35 +144,30 @@ class FileStore(object):
         return destination_path
 
     def get_file_path(self, uid):
-        dir_path = layoutmanager.get_instance().get_entry_path(uid)
-        return os.path.join(dir_path, 'data')
+        return layoutmanager.get_instance().get_data_path(uid)
 
     def delete(self, uid):
         """Remove the file associated to a given entry.
-        
+
         """
-        dir_path = layoutmanager.get_instance().get_entry_path(uid)
-        file_path = os.path.join(dir_path, 'data')
+        file_path = layoutmanager.get_instance().get_data_path(uid)
         if os.path.exists(file_path):
             os.remove(file_path)
 
     def hard_link_entry(self, new_uid, existing_uid):
-        existing_file = os.path.join(
-                layoutmanager.get_instance().get_entry_path(existing_uid),
-                'data')
-        new_file = os.path.join(
-                layoutmanager.get_instance().get_entry_path(new_uid),
-                'data')
+        existing_file = layoutmanager.get_instance().get_data_path(existing_uid)
+        new_file = layoutmanager.get_instance().get_data_path(new_uid)
 
-        logging.debug('removing %r' % new_file)
+        logging.debug('removing %r', new_file)
         os.remove(new_file)
 
-        logging.debug('hard linking %r -> %r' % (new_file, existing_file))
+        logging.debug('hard linking %r -> %r', new_file, existing_file)
         os.link(existing_file, new_file)
+
 
 class AsyncCopy(object):
     """Copy a file in chunks in the idle loop.
-    
+
     """
     CHUNK_SIZE = 65536
 
@@ -196,7 +193,7 @@ class AsyncCopy(object):
             # error writing data to file?
             if count < len(data):
                 logging.error('AC: Error writing %s -> %s: wrote less than '
-                        'expected' % (self.src, self.dest))
+                        'expected', self.src, self.dest)
                 self._cleanup()
                 self.completion(RuntimeError(
                         'Error writing data to destination file'))
@@ -210,8 +207,8 @@ class AsyncCopy(object):
                 self.completion(None)
                 return False
         except Exception, err:
-            logging.error("AC: Error copying %s -> %s: %r" % \
-                    (self.src, self.dest, err))
+            logging.error('AC: Error copying %s -> %s: %r', self.src, self.
+                dest, err)
             self._cleanup()
             self.completion(err)
             return False
@@ -227,4 +224,3 @@ class AsyncCopy(object):
         self.size = stat[6]
 
         gobject.idle_add(self._copy_block)
-

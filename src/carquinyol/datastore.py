@@ -22,6 +22,7 @@ import os
 import traceback
 
 import dbus
+import dbus.service
 import gobject
 
 from sugar import mime
@@ -43,9 +44,11 @@ DS_OBJECT_PATH = "/org/laptop/sugar/DataStore"
 
 logger = logging.getLogger(DS_LOG_CHANNEL)
 
+
 class DataStore(dbus.service.Object):
     """D-Bus API and logic for connecting all the other components.
-    """ 
+    """
+
     def __init__(self, **options):
         bus_name = dbus.service.BusName(DS_SERVICE,
                                         bus=dbus.SessionBus(),
@@ -56,7 +59,10 @@ class DataStore(dbus.service.Object):
         layout_manager = layoutmanager.get_instance()
         if layout_manager.get_version() == 0:
             migration.migrate_from_0()
-            layout_manager.set_version(1)
+            layout_manager.set_version(layoutmanager.CURRENT_LAYOUT_VERSION)
+            layout_manager.index_updated = False
+        elif layout_manager.get_version() == 1:
+            layout_manager.set_version(layoutmanager.CURRENT_LAYOUT_VERSION)
             layout_manager.index_updated = False
 
         self._metadata_store = MetadataStore()
@@ -65,8 +71,7 @@ class DataStore(dbus.service.Object):
         try:
             self._index_store.open_index()
         except Exception:
-            logging.error('Failed to open index, will rebuild\n%s' \
-                    % traceback.format_exc())
+            logging.exception('Failed to open index, will rebuild')
             layout_manager.index_updated = False
             self._index_store.remove_index()
             self._index_store.open_index()
@@ -81,7 +86,7 @@ class DataStore(dbus.service.Object):
 
     def _rebuild_index(self):
         uids = layoutmanager.get_instance().find_all()
-        logging.debug('Going to update the index with uids %r' % uids)
+        logging.debug('Going to update the index with uids %r', uids)
         gobject.idle_add(lambda: self.__rebuild_index_cb(uids),
                             priority=gobject.PRIORITY_LOW)
 
@@ -89,16 +94,15 @@ class DataStore(dbus.service.Object):
         if uids:
             uid = uids.pop()
 
-            logging.debug('Updating entry %r in index. %d to go.' % \
-                          (uid, len(uids)))
+            logging.debug('Updating entry %r in index. %d to go.', uid,
+                len(uids))
 
             if not self._index_store.contains(uid):
                 try:
                     props = self._metadata_store.retrieve(uid)
                     self._index_store.store(uid, props)
                 except Exception:
-                    logging.error('Error processing %r\n%s.' \
-                            % (uid, traceback.format_exc()))
+                    logging.exception('Error processing %r', uid)
 
         if not uids:
             logging.debug('Finished updating index.')
@@ -108,15 +112,15 @@ class DataStore(dbus.service.Object):
             return True
 
     def _create_completion_cb(self, async_cb, async_err_cb, uid, exc=None):
-        logger.debug("_create_completion_cb(%r, %r, %r, %r)" % \
-            (async_cb, async_err_cb, uid, exc))
+        logger.debug('_create_completion_cb(%r, %r, %r, %r)', async_cb,
+            async_err_cb, uid, exc)
         if exc is not None:
             async_err_cb(exc)
             return
 
         self.Created(uid)
         self._optimizer.optimize(uid)
-        logger.debug("created %s" % uid)
+        logger.debug('created %s', uid)
         async_cb(uid)
 
     @dbus.service.method(DS_DBUS_INTERFACE,
@@ -127,7 +131,7 @@ class DataStore(dbus.service.Object):
     def create(self, props, file_path, transfer_ownership,
                async_cb, async_err_cb):
         uid = str(uuid.uuid4())
-        logging.debug('datastore.create %r' % uid)
+        logging.debug('datastore.create %r', uid)
 
         if not props.get('timestamp', ''):
             props['timestamp'] = int(time.time())
@@ -145,15 +149,15 @@ class DataStore(dbus.service.Object):
         pass
 
     def _update_completion_cb(self, async_cb, async_err_cb, uid, exc=None):
-        logger.debug("_update_completion_cb() called with %r / %r, exc %r" % \
-            (async_cb, async_err_cb, exc))
+        logger.debug('_update_completion_cb() called with %r / %r, exc %r',
+            async_cb, async_err_cb, exc)
         if exc is not None:
             async_err_cb(exc)
             return
 
         self.Updated(uid)
         self._optimizer.optimize(uid)
-        logger.debug("updated %s" % uid)
+        logger.debug('updated %s', uid)
         async_cb()
 
     @dbus.service.method(DS_DBUS_INTERFACE,
@@ -163,7 +167,7 @@ class DataStore(dbus.service.Object):
              byte_arrays=True)
     def update(self, uid, props, file_path, transfer_ownership,
                async_cb, async_err_cb):
-        logging.debug('datastore.update %r' % uid)
+        logging.debug('datastore.update %r', uid)
 
         if not props.get('timestamp', ''):
             props['timestamp'] = int(time.time())
@@ -188,15 +192,14 @@ class DataStore(dbus.service.Object):
              in_signature='a{sv}as',
              out_signature='aa{sv}u')
     def find(self, query, properties):
-        logging.debug('datastore.find %r' % query)
+        logging.debug('datastore.find %r', query)
         t = time.time()
 
         if layoutmanager.get_instance().index_updated:
             try:
                 uids, count = self._index_store.find(query)
             except Exception:
-                logging.error('Failed to query index, will rebuild\n%s' \
-                        % traceback.format_exc())
+                logging.exception('Failed to query index, will rebuild')
                 layoutmanager.get_instance().index_updated = False
                 self._index_store.close_index()
                 self._index_store.remove_index()
@@ -205,19 +208,43 @@ class DataStore(dbus.service.Object):
 
         if not layoutmanager.get_instance().index_updated:
             logging.warning('Index updating, returning all entries')
+            return self._find_all(query, properties)
 
-            uids = layoutmanager.get_instance().find_all()
-            count = len(uids)
+        entries = []
+        for uid in uids:
+            entry_path = layoutmanager.get_instance().get_entry_path(uid)
+            if not os.path.exists(entry_path):
+                logging.warning(
+                    'Inconsistency detected, returning all entries')
 
-            offset = query.get('offset', 0)
-            limit = query.get('limit', MAX_QUERY_LIMIT)
-            uids = uids[offset:offset + limit]
+                layoutmanager.get_instance().index_updated = False
+                self._index_store.close_index()
+                self._index_store.remove_index()
+                self._index_store.open_index()
+                self._rebuild_index()
+
+                return self._find_all(query, properties)
+
+            metadata = self._metadata_store.retrieve(uid, properties)
+            entries.append(metadata)
+
+        logger.debug('find(): %r', time.time() - t)
+
+        return entries, count
+
+    def _find_all(self, query, properties):
+        uids = layoutmanager.get_instance().find_all()
+        count = len(uids)
+
+        offset = query.get('offset', 0)
+        limit = query.get('limit', MAX_QUERY_LIMIT)
+        uids = uids[offset:offset + limit]
 
         entries = []
         for uid in uids:
             metadata = self._metadata_store.retrieve(uid, properties)
             entries.append(metadata)
-        logger.debug('find(): %r' % (time.time() - t))
+
         return entries, count
 
     @dbus.service.method(DS_DBUS_INTERFACE,
@@ -225,7 +252,7 @@ class DataStore(dbus.service.Object):
              out_signature='s',
              sender_keyword='sender')
     def get_filename(self, uid, sender=None):
-        logging.debug('datastore.get_filename %r' % uid)
+        logging.debug('datastore.get_filename %r', uid)
         user_id = dbus.Bus().get_unix_user(sender)
         extension = self._get_extension(uid)
         return self._file_store.retrieve(uid, user_id, extension)
@@ -240,7 +267,7 @@ class DataStore(dbus.service.Object):
                          in_signature='s',
                          out_signature='a{sv}')
     def get_properties(self, uid):
-        logging.debug('datastore.get_properties %r' % uid)
+        logging.debug('datastore.get_properties %r', uid)
         metadata = self._metadata_store.retrieve(uid)
         return metadata
 
@@ -267,12 +294,12 @@ class DataStore(dbus.service.Object):
         self._index_store.delete(uid)
         self._file_store.delete(uid)
         self._metadata_store.delete(uid)
-        
+
         entry_path = layoutmanager.get_instance().get_entry_path(uid)
         os.removedirs(entry_path)
 
         self.Deleted(uid)
-        logger.debug("deleted %s" % uid)
+        logger.debug('deleted %s', uid)
 
     @dbus.service.signal(DS_DBUS_INTERFACE, signature="s")
     def Deleted(self, uid):
@@ -312,4 +339,3 @@ class DataStore(dbus.service.Object):
     @dbus.service.signal(DS_DBUS_INTERFACE, signature="a{sv}")
     def Unmounted(self, descriptor):
         pass
-
