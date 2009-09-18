@@ -1,9 +1,11 @@
-sugar-datastore-0.86 (0.85.4-1) UNRELEASED; urgency=low
+sugar-datastore-0.86 (0.85.4-1) unstable; urgency=low
 
+  * New upstream development release.
   * Bump major version to 0.86 for binary and source package.
   * Simplify watch file (we want to watch too new files too).
+  * Update debian/copyright (no new licenses or copyright holders).
 
- -- Jonas Smedegaard <dr@jones.dk>  Fri, 18 Sep 2009 13:26:26 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 18 Sep 2009 14:49:59 +0200
 
 sugar-datastore-0.84 (0.84.0-3) unstable; urgency=low
 
