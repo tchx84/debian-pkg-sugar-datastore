@@ -13,7 +13,7 @@ sugar-datastore-0.84 (0.84.0-3) unstable; urgency=low
   * Bump up policy compliance to standards version 3.8.3.
   * Update debian/copyright format to DEP5 rev54.
 
- -- Jonas Smedegaard <dr@jones.dk>  Fri, 18 Sep 2009 13:02:58 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Fri, 18 Sep 2009 13:08:27 +0200
 
 sugar-datastore-0.84 (0.84.0-2) unstable; urgency=low
 
