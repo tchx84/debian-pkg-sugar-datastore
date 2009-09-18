@@ -19,8 +19,7 @@ Files: ./config.*
 	./depcomp
 	./missing
 	./py-compile
-Copyright: 1996-1997,1999-2000,2002-2006, Free Software Foundation, Inc.
-	1996, Fran,cois Pinard <pinard@iro.umontreal.ca>
+Copyright: 1992-2008, Free Software Foundation, Inc.
 License: GPL-2+ or other-Autoconf
 
 Files: ./ltmain.sh
