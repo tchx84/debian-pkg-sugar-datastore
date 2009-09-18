@@ -1,6 +1,6 @@
-Format-Specification: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=48
+Format: http://svn.debian.org/wsvn/dep/web/deps/dep5.mdwn?op=file&rev=54
 Name: sugar-datastore
-Maintainer: Sugarlabs <sugar-devel@lists.sugarlabs.org>
+Contact: Sugarlabs <sugar-devel@lists.sugarlabs.org>
 	http://lists.sugarlabs.org/listinfo/sugar-devel
 	irc://irc.freenode.net/sugar
 Source: http://download.sugarlabs.org/sources/sucrose/glucose/sugar-datastore/
@@ -31,6 +31,7 @@ License: GPL-2+ or other-Libtool
 Files: ./install-sh
 Copyright: 1994, X Consortium
 License: other-MIT
+
 Files: debian/*
 Copyright: © 2004-2009 Jonas Smedegaard <dr@jones.dk>
 License: GPL-2+
