@@ -1,3 +1,9 @@
+sugar-datastore-0.86 (0.86.0-0) UNRELEASED; urgency=low
+
+  * New upstream stable release.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 29 Sep 2009 22:21:22 +0200
+
 sugar-datastore-0.86 (0.85.4-2) unstable; urgency=low
 
   * Drop unneeded dependency on python-gnome2.
