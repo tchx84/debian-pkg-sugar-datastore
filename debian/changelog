@@ -1,8 +1,9 @@
-sugar-datastore-0.88 (0.86.1-2) UNRELEASED; urgency=low
+sugar-datastore-0.88 (0.87.1-1) unstable; urgency=low
 
+  * New upstream development release.
   * Switch packaging to branch 0.88.
 
- -- Jonas Smedegaard <dr@jones.dk>  Tue, 01 Dec 2009 22:24:43 +0100
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 01 Dec 2009 22:26:47 +0100
 
 sugar-datastore-0.86 (0.86.1-1) unstable; urgency=low
 
