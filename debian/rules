@@ -32,7 +32,7 @@ pkg = $(pkgbase)-$(pkgbranch)
 DEB_UPSTREAM_PACKAGE = $(DEB_SOURCE_PACKAGE:%-$(pkgbranch)=%)
 DEB_UPSTREAM_URL = http://download.sugarlabs.org/sources/sucrose/glucose/sugar-datastore
 DEB_UPSTREAM_TARBALL_EXTENSION = tar.bz2
-DEB_UPSTREAM_TARBALL_MD5 = a169c6739642f20acd8074c3dac0d608
+DEB_UPSTREAM_TARBALL_MD5 = 631f8f5036515db8ccd5f6926e588b34
 
 # Needed (always/seldom) at runtime
 CDBS_DEPENDS = python-gobject, python-dbus, python-xapian, python-sugar-$(pkgbranch)
