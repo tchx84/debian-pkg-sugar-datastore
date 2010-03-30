@@ -16,7 +16,6 @@ Files: ./AUTHORS,
 	./debian/control,
 	./debian/control.in,
 	./debian/gbp.conf,
-	./debian/patches/README,
 	./debian/pycompat,
 	./debian/source/format,
 	./debian/watch,
@@ -125,7 +124,7 @@ Copyright: 1996, 1998, 2000-2005,
 	1997, 2000-2001, 2003-2006,
 	1999-2005,
 	1999-2005, 2008
-	1999-2006,
+	1999-2006, 2009
 	2001, 2003, 2005, Free Software Foundation, Inc
 	2001-2003, 2005 Free Software Foundation, Inc
 	2001-2003, 2005, 2008, Free Software Foundation, Inc
