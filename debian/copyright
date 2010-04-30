@@ -81,8 +81,8 @@ License: other-SA-Libtool
  distribution terms that you use for the rest of that program.
 
 License: other-GAP-FSF
- This configure script is free software; the Free Software Foundation
- gives unlimited permission to copy, distribute and modify it.
+ This file is free software; the Free Software Foundation gives
+ unlimited permission to copy, distribute and modify it.
  .
  Some files differ from above by replacing "this file" with more
  specific term.
