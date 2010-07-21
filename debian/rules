@@ -45,6 +45,5 @@ CDBS_REPLACES = $(pkgbase)
 
 # Transitional quirk: python-olpc-datastore renamed to python-carquinyol
 # (unneeded since Squeeze: can be dropped after Squeeze+1)
-CDBS_PROVIDES += , python-olpc-datastore
 CDBS_BREAKS += , python-olpc-datastore
 CDBS_REPLACES += , python-olpc-datastore
