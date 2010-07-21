@@ -1,3 +1,17 @@
+sugar-datastore-0.90 (0.88.0-3) UNRELEASED; urgency=low
+
+  * Switch packaging to upstream branch 0.90.
+  * Improve copyright file:
+    + Fix add install-sh, licensed as Expat and other-X.
+    + Drop unused license section MIT.
+    + Add comment on Expat variation.
+    + Rename and tighten other-GAP-* sections.
+  * Relax transitional conflicts to use Breaks: (not Conflicts:).
+  * Stop needlessly providing python-olpc-datastore.
+  * Bump Policy compliance to standards-version to 3.9.0.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Wed, 21 Jul 2010 11:44:34 +0200
+
 sugar-datastore-0.88 (0.88.0-2) unstable; urgency=low
 
   * New upstream stable release.
