@@ -35,15 +35,15 @@ DEB_UPSTREAM_TARBALL_EXTENSION = tar.bz2
 DEB_UPSTREAM_TARBALL_MD5 = b919cbfdc5030c98924a9ca07eaf9e4c
 
 # Needed (always/seldom) at runtime
-CDBS_DEPENDS = python-gobject, python-dbus, python-xapian, python-sugar-$(pkgbranch)
-CDBS_SUGGESTS = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
+CDBS_DEPENDS_DEFAULT = python-gobject, python-dbus, python-xapian, python-sugar-$(pkgbranch)
+CDBS_SUGGESTS_DEFAULT = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
 
 # Ensure only one variant is installed at a time (Debian Policy 7.6.2)
-CDBS_PROVIDES = $(pkgbase)
-CDBS_CONFLICTS = $(pkgbase)
-CDBS_REPLACES = $(pkgbase)
+CDBS_PROVIDES_DEFAULT = $(pkgbase)
+CDBS_CONFLICTS_DEFAULT = $(pkgbase)
+CDBS_REPLACES_DEFAULT = $(pkgbase)
 
 # Transitional quirk: python-olpc-datastore renamed to python-carquinyol
 # (unneeded since Squeeze: can be dropped after Squeeze+1)
-CDBS_BREAKS += , python-olpc-datastore
-CDBS_REPLACES += , python-olpc-datastore
+CDBS_BREAKS_DEFAULT += , python-olpc-datastore
+CDBS_REPLACES_DEFAULT += , python-olpc-datastore
