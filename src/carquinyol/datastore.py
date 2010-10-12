@@ -56,7 +56,7 @@ class DataStore(dbus.service.Object):
                                         allow_replacement=False)
         dbus.service.Object.__init__(self, bus_name, DS_OBJECT_PATH)
 
-        migrated = self._migrate()
+        migrated, initiated = self._open_layout()
 
         self._metadata_store = MetadataStore()
         self._file_store = FileStore()
@@ -75,26 +75,36 @@ class DataStore(dbus.service.Object):
             self._rebuild_index()
             return
 
-        if not self._index_store.index_updated:
+        if initiated:
+            logging.debug('Initiate datastore')
+            self._index_store.flush()
+        elif not self._index_store.index_updated:
             logging.debug('Index is not up-to-date, will update')
             self._update_index()
 
-    def _migrate(self):
-        """Check version of data store on disk and migrate if necessary.
+    def _open_layout(self):
+        """Open layout manager, check version of data store on disk and
+        migrate if necessary.
 
-        Returns True if migration was done and an index rebuild is required,
-        False otherwise.
+        Returns a pair of booleans. For the first, True if migration was done
+        and an index rebuild is required. For the second, True if datastore was
+        just initiated.
         """
         layout_manager = layoutmanager.get_instance()
+
+        if layout_manager.is_empty():
+            layout_manager.set_version(layoutmanager.CURRENT_LAYOUT_VERSION)
+            return False, True
+
         old_version = layout_manager.get_version()
         if old_version == layoutmanager.CURRENT_LAYOUT_VERSION:
-            return False
+            return False, False
 
         if old_version == 0:
             migration.migrate_from_0()
 
         layout_manager.set_version(layoutmanager.CURRENT_LAYOUT_VERSION)
-        return True
+        return True, False
 
     def _rebuild_index(self):
         """Remove and recreate index."""
@@ -121,7 +131,26 @@ class DataStore(dbus.service.Object):
 
             if not self._index_store.contains(uid):
                 try:
+                    update_metadata = False
                     props = self._metadata_store.retrieve(uid)
+                    if 'filesize' not in props:
+                        path = self._file_store.get_file_path(uid)
+                        if os.path.exists(path):
+                            props['filesize'] = os.stat(path).st_size
+                            update_metadata = True
+                    if 'creation_time' not in props:
+                        if 'ctime' in props:
+                            try:
+                                props['creation_time'] = time.mktime(
+                                        time.strptime(props['ctime'],
+                                            migration.DATE_FORMAT))
+                            except (TypeError, ValueError):
+                                pass
+                        if 'creation_time' not in props:
+                            props['creation_time'] = props['timestamp']
+                        update_metadata = True
+                    if update_metadata:
+                        self._metadata_store.store(uid, props)
                     self._index_store.store(uid, props)
                 except Exception:
                     logging.exception('Error processing %r', uid)
@@ -159,6 +188,23 @@ class DataStore(dbus.service.Object):
         if not props.get('timestamp', ''):
             props['timestamp'] = int(time.time())
 
+        # FIXME: Support for the deprecated ctime property. Remove in 0.92.
+        if 'ctime' in props:
+            try:
+                props['creation_time'] = time.mktime(time.strptime(
+                    migration.DATE_FORMAT, props['ctime']))
+            except (TypeError, ValueError):
+                pass
+
+        if 'creation_time' not in props:
+            props['creation_time'] = props['timestamp']
+
+        if os.path.exists(file_path):
+            stat = os.stat(file_path)
+            props['filesize'] = stat.st_size
+        else:
+            props['filesize'] = 0
+
         self._metadata_store.store(uid, props)
         self._index_store.store(uid, props)
         self._file_store.store(uid, file_path, transfer_ownership,
@@ -194,6 +240,26 @@ class DataStore(dbus.service.Object):
 
         if not props.get('timestamp', ''):
             props['timestamp'] = int(time.time())
+
+        # FIXME: Support for the deprecated ctime property. Remove in 0.92.
+        if 'ctime' in props:
+            try:
+                props['creation_time'] = time.mktime(time.strptime(
+                    migration.DATE_FORMAT, props['ctime']))
+            except (TypeError, ValueError):
+                pass
+
+        if 'creation_time' not in props:
+            props['creation_time'] = props['timestamp']
+
+        if file_path:
+            # Empty file_path means skipping storage stage, see filestore.py
+            # TODO would be more useful to update filesize after real file save
+            if os.path.exists(file_path):
+                stat = os.stat(file_path)
+                props['filesize'] = stat.st_size
+            else:
+                props['filesize'] = 0
 
         self._metadata_store.store(uid, props)
         self._index_store.store(uid, props)

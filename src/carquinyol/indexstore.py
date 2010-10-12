@@ -28,6 +28,9 @@ from carquinyol.layoutmanager import MAX_QUERY_LIMIT
 _VALUE_UID = 0
 _VALUE_TIMESTAMP = 1
 _VALUE_TITLE = 2
+# 3 reserved for version support
+_VALUE_FILESIZE = 4
+_VALUE_CREATION_TIME = 5
 
 _PREFIX_NONE = 'N'
 _PREFIX_FULL_VALUE = 'F'
@@ -41,7 +44,7 @@ _PREFIX_KEEP = 'K'
 _FLUSH_THRESHOLD = 20
 
 # Force a flush after _n_ seconds since the last change to the db
-_FLUSH_TIMEOUT = 60
+_FLUSH_TIMEOUT = 5
 
 _PROPERTIES_NOT_TO_INDEX = ['timestamp', 'preview']
 
@@ -57,6 +60,8 @@ _QUERY_TERM_MAP = {
 
 _QUERY_VALUE_MAP = {
     'timestamp': {'number': _VALUE_TIMESTAMP, 'type': float},
+    'filesize': {'number': _VALUE_FILESIZE, 'type': int},
+    'creation_time': {'number': _VALUE_CREATION_TIME, 'type': float},
 }
 
 
@@ -66,6 +71,22 @@ class TermGenerator (xapian.TermGenerator):
         document.add_value(_VALUE_TIMESTAMP,
             xapian.sortable_serialise(float(properties['timestamp'])))
         document.add_value(_VALUE_TITLE, properties.get('title', '').strip())
+        if 'filesize' in properties:
+            try:
+                document.add_value(_VALUE_FILESIZE,
+                    xapian.sortable_serialise(int(properties['filesize'])))
+            except (ValueError, TypeError):
+                logging.debug('Invalid value for filesize property: %s',
+                              properties['filesize'])
+        if 'creation_time' in properties:
+            try:
+                document.add_value(
+                    _VALUE_CREATION_TIME, xapian.sortable_serialise(
+                        float(properties['creation_time'])))
+            except (ValueError, TypeError):
+                logging.debug('Invalid value for creation_time property: %s',
+                              properties['creation_time'])
+
 
         self.set_document(document)
 
@@ -226,7 +247,7 @@ class IndexStore(object):
         if not self._database:
             return
 
-        self._database.flush()
+        self._flush(True)
         self._database = None
 
     def remove_index(self):
@@ -286,6 +307,14 @@ class IndexStore(object):
             enquire.set_sort_by_value(_VALUE_TITLE, True)
         elif order_by == '-title':
             enquire.set_sort_by_value(_VALUE_TITLE, False)
+        elif order_by == '+filesize':
+            enquire.set_sort_by_value(_VALUE_FILESIZE, True)
+        elif order_by == '-filesize':
+            enquire.set_sort_by_value(_VALUE_FILESIZE, False)
+        elif order_by == '+creation_time':
+            enquire.set_sort_by_value(_VALUE_CREATION_TIME, True)
+        elif order_by == '-creation_time':
+            enquire.set_sort_by_value(_VALUE_CREATION_TIME, False)
         else:
             logging.warning('Unsupported property for sorting: %s', order_by)
 
@@ -334,7 +363,8 @@ class IndexStore(object):
 
     def _flush(self, force=False):
         """Called after any database mutation"""
-        logging.debug('IndexStore.flush: %r %r', force, self._pending_writes)
+        logging.debug('IndexStore.flush: force=%r _pending_writes=%r',
+                force, self._pending_writes)
 
         self._set_index_updated(False)
 

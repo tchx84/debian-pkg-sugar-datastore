@@ -18,7 +18,7 @@ import os
 import logging
 
 MAX_QUERY_LIMIT = 40960
-CURRENT_LAYOUT_VERSION = 4
+CURRENT_LAYOUT_VERSION = 6
 
 class LayoutManager(object):
     """Provide the logic about how entries are stored inside the datastore
@@ -88,7 +88,7 @@ class LayoutManager(object):
                         uids.append(g)
         return uids
 
-    def _is_empty(self):
+    def is_empty(self):
         """Check if there is any existing entry.
 
         All data store layout versions are handled. Will err on the safe
