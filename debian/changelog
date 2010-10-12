@@ -1,3 +1,14 @@
+sugar-datastore-0.90 (0.90.0-1) unstable; urgency=low
+
+  * New upstream stable release.
+  * Append _DEFAULT to deprecated CDBS variables in rules file.
+  * Ease building with git-buildpackage: Git-ignore quilt .pc dir, and
+    add source local-options.
+  * Drop TODO: Only issue was use of Xappy, but its predecessor, secore,
+    was dropped since upstream v0.8.1.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Tue, 12 Oct 2010 14:29:23 +0200
+
 sugar-datastore-0.90 (0.89.1-1) experimental; urgency=low
 
   * New upstream development release.
