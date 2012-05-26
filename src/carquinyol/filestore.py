@@ -133,14 +133,6 @@ class FileStore(object):
             else:
                 raise
 
-        # Try to make the original file readable. This can fail if the file is
-        # in a FAT filesystem.
-        try:
-            os.chmod(file_path, 0604)
-        except OSError, e:
-            if e.errno != errno.EPERM:
-                raise
-
         return destination_path
 
     def get_file_path(self, uid):
@@ -155,7 +147,8 @@ class FileStore(object):
             os.remove(file_path)
 
     def hard_link_entry(self, new_uid, existing_uid):
-        existing_file = layoutmanager.get_instance().get_data_path(existing_uid)
+        existing_file = layoutmanager.get_instance().get_data_path(
+            existing_uid)
         new_file = layoutmanager.get_instance().get_data_path(new_uid)
 
         logging.debug('removing %r', new_file)
@@ -220,9 +213,12 @@ class AsyncCopy(object):
         self.completion(*args)
 
     def start(self):
+        if os.path.exists(self.dest):
+            os.unlink(self.dest)
+
         self.src_fp = os.open(self.src, os.O_RDONLY)
         self.dest_fp = os.open(self.dest, os.O_RDWR | os.O_TRUNC | os.O_CREAT,
-                0644)
+                0444)
 
         stat = os.fstat(self.src_fp)
         self.size = stat[6]

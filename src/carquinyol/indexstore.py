@@ -87,7 +87,6 @@ class TermGenerator (xapian.TermGenerator):
                 logging.debug('Invalid value for creation_time property: %s',
                               properties['creation_time'])
 
-
         self.set_document(document)
 
         properties = dict(properties)
@@ -202,6 +201,7 @@ class QueryParser (xapian.QueryParser):
             logging.warning('Invalid query string: ' + exception.get_msg())
             return Query()
 
+    # pylint: disable=W0221
     def parse_query(self, query_dict, query_string):
         logging.debug('parse_query %r %r', query_dict, query_string)
         queries = []
@@ -261,7 +261,7 @@ class IndexStore(object):
         postings = self._database.postlist(_PREFIX_FULL_VALUE + \
             _PREFIX_UID + uid)
         try:
-            postlist_item = postings.next()
+            __ = postings.next()
         except StopIteration:
             return False
         return True
