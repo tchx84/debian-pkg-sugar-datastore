@@ -17,14 +17,14 @@ License: GAP~Makefile.in
 
 Files: aclocal.m4
  m4/*
-Copyright: 1996-2009, Free Software Foundation, Inc.
+Copyright: 1996-2010, Free Software Foundation, Inc.
 License: GAP
 
 Files: config.*
  depcomp
  missing
  py-compile
-Copyright: 1992-2008, Free Software Foundation, Inc.
+Copyright: 1992-2009, Free Software Foundation, Inc.
 License: GPL-2+ with Autoconf exception
  As a special exception to the GNU General Public License, if you
  distribute this file as part of a program that contains a configuration
@@ -32,12 +32,12 @@ License: GPL-2+ with Autoconf exception
  distribution terms that you use for the rest of that program.
 
 Files: configure
-Copyright: 1992-1996, 1998-2009, Free Software Foundation, Inc.
+Copyright: 1992-1996, 1998-2010, Free Software Foundation, Inc.
 License: GAP~configure
 
 Files: ltmain.sh
  m4/libtool.m4
-Copyright: 1996-2001,2003-2008, Free Software Foundation, Inc.
+Copyright: 1996-2001,2003-2010, Free Software Foundation, Inc.
 License: GPL-2+ with Libtool exception
  As a special exception to the GNU General Public License, if you
  distribute this file as part of a program or library that is built
