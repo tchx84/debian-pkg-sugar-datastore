@@ -53,7 +53,7 @@ License: Expat~X with X exception
  from the X Consortium.
 
 Files: debian/*
-Copyright: 2008-2010 Jonas Smedegaard <dr@jones.dk>
+Copyright: 2008-2010,2012, Jonas Smedegaard <dr@jones.dk>
 License: GPL-2+
 
 License: GPL-2+
