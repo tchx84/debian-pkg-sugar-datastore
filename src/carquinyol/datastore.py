@@ -15,11 +15,13 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
+# pylint fails on @debian's arguments
+# pylint: disable=C0322
+
 import logging
 import uuid
 import time
 import os
-import traceback
 
 import dbus
 import dbus.service
@@ -138,6 +140,9 @@ class DataStore(dbus.service.Object):
                         if os.path.exists(path):
                             props['filesize'] = os.stat(path).st_size
                             update_metadata = True
+                    if 'timestamp' not in props:
+                        props['timestamp'] = str(int(time.time()))
+                        update_metadata = True
                     if 'creation_time' not in props:
                         if 'ctime' in props:
                             try:
@@ -208,10 +213,10 @@ class DataStore(dbus.service.Object):
         self._metadata_store.store(uid, props)
         self._index_store.store(uid, props)
         self._file_store.store(uid, file_path, transfer_ownership,
-                lambda *args: self._create_completion_cb(async_cb,
+                lambda * args: self._create_completion_cb(async_cb,
                                                          async_err_cb,
                                                          uid,
-                                                         *args))
+                                                         * args))
 
     @dbus.service.signal(DS_DBUS_INTERFACE, signature="s")
     def Created(self, uid):
@@ -268,10 +273,10 @@ class DataStore(dbus.service.Object):
                 (not file_path or os.path.exists(file_path)):
             self._optimizer.remove(uid)
         self._file_store.store(uid, file_path, transfer_ownership,
-                lambda *args: self._update_completion_cb(async_cb,
+                lambda * args: self._update_completion_cb(async_cb,
                                                          async_err_cb,
                                                          uid,
-                                                         *args))
+                                                         * args))
 
     @dbus.service.signal(DS_DBUS_INTERFACE, signature="s")
     def Updated(self, uid):
@@ -305,6 +310,7 @@ class DataStore(dbus.service.Object):
                 return self._find_all(query, properties)
 
             metadata = self._metadata_store.retrieve(uid, properties)
+            self._fill_internal_props(metadata, uid, properties)
             entries.append(metadata)
 
         logger.debug('find(): %r', time.time() - t)
@@ -322,9 +328,27 @@ class DataStore(dbus.service.Object):
         entries = []
         for uid in uids:
             metadata = self._metadata_store.retrieve(uid, properties)
+            self._fill_internal_props(metadata, uid, properties)
             entries.append(metadata)
 
         return entries, count
+
+    def _fill_internal_props(self, metadata, uid, names=None):
+        """Fill in internal / computed properties in metadata
+
+        Properties are only set if they appear in names or if names is
+        empty.
+        """
+        if not names or 'uid' in names:
+            metadata['uid'] = uid
+
+        if not names or 'filesize' in names:
+            file_path = self._file_store.get_file_path(uid)
+            if os.path.exists(file_path):
+                stat = os.stat(file_path)
+                metadata['filesize'] = str(stat.st_size)
+            else:
+                metadata['filesize'] = '0'
 
     @dbus.service.method(DS_DBUS_INTERFACE,
              in_signature='s',
@@ -348,6 +372,7 @@ class DataStore(dbus.service.Object):
     def get_properties(self, uid):
         logging.debug('datastore.get_properties %r', uid)
         metadata = self._metadata_store.retrieve(uid)
+        self._fill_internal_props(metadata, uid)
         return metadata
 
     @dbus.service.method(DS_DBUS_INTERFACE,
