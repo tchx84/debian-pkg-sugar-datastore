@@ -1,3 +1,21 @@
+sugar-datastore-0.96 (0.90.0-2) UNRELEASED; urgency=low
+
+  * Bump debhelper compatibility level to 7.
+  * Use Python helper python2 (not python-support).
+  * Rewrite copyright file using format 1.0.
+  * Bump standards-version to 3.9.3.
+  * Use anonscm.debian.org for Vcs-Browser field.
+  * Switch packaging to upstream branch 0.96.
+  * Extend copyright of Debian packaging to cover recent years.
+  * Update package relations:
+    + Tighten build-dependency on cdbs and python: Needed for python2
+      helper.
+    + Stop build-depending on python-central: No longer used.
+    + Relax build-depend unversioned on debhelper and devscripts: Needed
+      versions satisfied even in oldstable.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sat, 26 May 2012 23:52:12 +0200
+
 sugar-datastore-0.90 (0.90.0-1) unstable; urgency=low
 
   * New upstream stable release.
