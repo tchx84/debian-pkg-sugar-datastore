@@ -1,4 +1,4 @@
-Source: sugar-datastore-0.90
+Source: sugar-datastore-0.96
 Section: python
 Priority: optional
 Maintainer: Debian OLPC <debian-olpc-devel@lists.alioth.debian.org>
@@ -9,7 +9,7 @@ Vcs-Git: git://git.debian.org/git/collab-maint/sugar-datastore.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/sugar-datastore.git
 Homepage: http://wiki.sugarlabs.org/go/Sugar
 
-Package: python-carquinyol-0.90
+Package: python-carquinyol-0.96
 Architecture: any
 Depends: ${shlibs:Depends}, ${python:Depends}, ${cdbs:Depends}, ${misc:Depends}
 Suggests: ${cdbs:Suggests}
@@ -20,7 +20,7 @@ Replaces: ${cdbs:Replaces}
 Description: Sugar graphical shell - datastore
  Sugar is a graphical user interface aimed at children.
  .
- Originating as intregral part of the OLPC "XO" a.k.a. the $100 laptop,
+ Originating as integral part of the OLPC "XO" a.k.a. the $100 laptop,
  Sugar has since grown into a more widely usable low-ressource desktop
  environment for kids.
  .
