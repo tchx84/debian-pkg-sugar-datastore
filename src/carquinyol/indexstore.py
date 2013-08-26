@@ -46,7 +46,7 @@ _FLUSH_THRESHOLD = 20
 # Force a flush after _n_ seconds since the last change to the db
 _FLUSH_TIMEOUT = 5
 
-_PROPERTIES_NOT_TO_INDEX = ['timestamp', 'preview']
+_PROPERTIES_NOT_TO_INDEX = ['timestamp', 'preview', 'launch-times']
 
 _MAX_RESULTS = int(2 ** 31 - 1)
 
@@ -235,12 +235,32 @@ class IndexStore(object):
         self._database = None
         self._flush_timeout = None
         self._pending_writes = 0
-        self._index_updated_path = os.path.join(
-                layoutmanager.get_instance().get_root_path(), 'index_updated')
+        root_path=layoutmanager.get_instance().get_root_path()
+        self._index_updated_path = os.path.join(root_path,
+                                                'index_updated')
+        self._std_index_path = layoutmanager.get_instance().get_index_path()
+	self._index_path = self._std_index_path
 
-    def open_index(self):
-        index_path = layoutmanager.get_instance().get_index_path()
-        self._database = WritableDatabase(index_path, xapian.DB_CREATE_OR_OPEN)
+    def open_index(self, temp_path=False):
+        # callers to open_index must be able to
+        # handle an exception -- usually caused by
+        # IO errors such as ENOSPC and retry putting
+        # the index on a temp_path
+        if temp_path:
+            try:
+                # mark the on-disk index stale
+                self._set_index_updated(False)
+            except:
+                pass
+            self._index_path = temp_path
+        else:
+             self._index_path = self._std_index_path
+        try:
+             self._database = WritableDatabase(self._index_path,
+                                               xapian.DB_CREATE_OR_OPEN)
+        except Exception as e:
+             logging.error('Exception opening database')
+             raise
 
     def close_index(self):
         """Close index database if it is open."""
@@ -248,14 +268,18 @@ class IndexStore(object):
             return
 
         self._flush(True)
-        self._database = None
+        try:
+            # does Xapian write in its destructors?
+            self._database = None
+        except Exception as e:
+            logging.error('Exception tearing down database')
+            raise
 
     def remove_index(self):
-        index_path = layoutmanager.get_instance().get_index_path()
-        if not os.path.exists(index_path):
+        if not os.path.exists(self._index_path):
             return
-        for f in os.listdir(index_path):
-            os.remove(os.path.join(index_path, f))
+        for f in os.listdir(self._index_path):
+            os.remove(os.path.join(self._index_path, f))
 
     def contains(self, uid):
         postings = self._database.postlist(_PREFIX_FULL_VALUE + \
@@ -278,7 +302,7 @@ class IndexStore(object):
             self._database.replace_document(_PREFIX_FULL_VALUE + \
                 _PREFIX_UID + uid, document)
 
-        self._flush()
+        self._flush(True)
 
     def find(self, query):
         offset = query.pop('offset', 0)
@@ -329,7 +353,7 @@ class IndexStore(object):
 
     def delete(self, uid):
         self._database.delete_document(_PREFIX_FULL_VALUE + _PREFIX_UID + uid)
-        self._flush()
+        self._flush(True)
 
     def get_activities(self):
         activities = []
@@ -347,6 +371,9 @@ class IndexStore(object):
     index_updated = property(get_index_updated)
 
     def _set_index_updated(self, index_updated):
+        if self._std_index_path != self._index_path:
+             # operating from tmpfs
+             return True
         if index_updated != self.index_updated:
             if index_updated:
                 index_updated_file = open(self._index_updated_path, 'w')
@@ -374,7 +401,13 @@ class IndexStore(object):
 
         self._pending_writes += 1
         if force or self._pending_writes > _FLUSH_THRESHOLD:
-            self._database.flush()
+            try:
+                self._database.flush()
+            except Exception, e:
+                logging.exception(e)
+                logging.error("Exception during database.flush()")
+                # bail out to trigger a reindex
+                sys.exit(1)
             self._pending_writes = 0
             self._set_index_updated(True)
         else:
