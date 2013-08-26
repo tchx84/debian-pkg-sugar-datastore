@@ -1,3 +1,9 @@
+sugar-datastore-0.98 (0.98.1-1~1) UNRELEASED; urgency=low
+
+  * New upstream release 
+
+ -- Santiago Ruano Rincón <santiago@debian.org>  Mon, 26 Aug 2013 10:52:11 +0200
+
 sugar-datastore-0.96 (0.96.0-1) unstable; urgency=low
 
   * Bump debhelper compatibility level to 7.

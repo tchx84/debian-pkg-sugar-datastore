@@ -67,6 +67,11 @@ Copyright: 2004, Free Software Foundation, Inc
 License: UNKNOWN
  FIXME
 
+Files: install-sh
+Copyright: 1994, X Consortium
+License: Expat
+ FIXME
+
 Files: configure
 Copyright: (ISLOWER ? 'A' + ( - 'a') : )
   (ISLOWER ? ( | 0x40) : )
@@ -107,11 +112,6 @@ Files: src/carquinyol/datastore.py
 Copyright: 2007, ObjectRealms, LLC
   2008, One Laptop Per Child
 License: GPL-2+
- FIXME
-
-Files: install-sh
-Copyright: 1994, X Consortium
-License: MIT/X11 (BSD like)
  FIXME
 
 Files: aclocal.m4
