@@ -1,4 +1,4 @@
-Source: sugar-datastore-0.96
+Source: sugar-datastore-0.98
 Section: python
 Priority: optional
 Maintainer: Debian OLPC <debian-olpc-devel@lists.alioth.debian.org>
@@ -9,7 +9,7 @@ Vcs-Git: git://git.debian.org/git/collab-maint/sugar-datastore.git
 Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/sugar-datastore.git
 Homepage: http://wiki.sugarlabs.org/go/Sugar
 
-Package: python-carquinyol-0.96
+Package: python-carquinyol-0.98
 Architecture: any
 Depends: ${shlibs:Depends}, ${python:Depends}, ${cdbs:Depends}, ${misc:Depends}
 Suggests: ${cdbs:Suggests}
