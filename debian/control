@@ -15,6 +15,7 @@ Standards-Version: 3.9.6
 Vcs-Git: git://git.debian.org/collab-maint/sugar-datastore.git
 Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/sugar-datastore.git
 Homepage: http://wiki.sugarlabs.org/go/Sugar
+XS-Python-Version: >= 2.7
 
 Package: python-carquinyol-0.104
 Architecture: any
