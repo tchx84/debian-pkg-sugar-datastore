@@ -22,6 +22,7 @@ Depends: ${cdbs:Depends},
  ${misc:Depends},
  ${python:Depends},
  ${shlibs:Depends}
+Recommends: ${cdbs:Recommends}
 Suggests: ${cdbs:Suggests}
 Provides: ${cdbs:Provides},
  ${python:Provides}
