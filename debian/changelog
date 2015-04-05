@@ -14,7 +14,7 @@ sugar-datastore-0.104 (0.104.1-1) experimental; urgency=medium
     + Depend on python-sugar3 (not python-sugar-*).
     + Depend on python-gi and gir1.2-glib-2.0 (not python-gobject).
 
- -- Jonas Smedegaard <dr@jones.dk>  Sun, 05 Apr 2015 16:21:20 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 05 Apr 2015 16:46:16 +0200
 
 sugar-datastore-0.98 (0.98.1-2) unstable; urgency=medium
 
