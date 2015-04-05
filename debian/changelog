@@ -1,4 +1,4 @@
-sugar-datastore-0.98 (0.98.1-2) UNRELEASED; urgency=medium
+sugar-datastore-0.98 (0.98.1-2) unstable; urgency=medium
 
   * Update copyright info:
     + Update alternate git source URL.
@@ -17,7 +17,7 @@ sugar-datastore-0.98 (0.98.1-2) UNRELEASED; urgency=medium
   * Bump dephelper compatibility level to 8.
   * Auto-resolve package branch.
 
- -- Jonas Smedegaard <dr@jones.dk>  Sun, 05 Apr 2015 04:37:48 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 05 Apr 2015 04:43:01 +0200
 
 sugar-datastore-0.98 (0.98.1-1) unstable; urgency=low
 
