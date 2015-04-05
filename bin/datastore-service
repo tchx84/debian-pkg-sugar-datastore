@@ -1,21 +1,14 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 import sys
 import os
 import signal
 import logging
-import gobject
+from gi.repository import GObject
 import dbus.service
 import dbus.mainloop.glib
 import dbus.glib
 from carquinyol.datastore import DataStore
-from sugar import logger
-
-# Path handling
-profile = os.environ.get('SUGAR_PROFILE', 'default')
-base_dir = os.path.join(os.path.expanduser('~'), '.sugar', profile)
-log_dir = os.path.join(base_dir, "logs")
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
+from sugar3 import logger
 
 # setup logger
 logger.start('datastore')
@@ -28,7 +21,7 @@ connected = True
 ds = DataStore()
 
 # and run it
-mainloop = gobject.MainLoop()
+mainloop = GObject.MainLoop()
 
 
 def handle_disconnect():
