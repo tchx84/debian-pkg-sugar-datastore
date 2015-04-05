@@ -4,7 +4,7 @@ Upstream-Contact: Sugarlabs <sugar-devel@lists.sugarlabs.org>
  http://lists.sugarlabs.org/listinfo/sugar-devel
  irc://irc.freenode.net/sugar
 Source: http://download.sugarlabs.org/sources/sucrose/glucose/sugar-datastore/
- git://git.sugarlabs.org/sugar-datastore/mainline
+ git://github.com/sugarlabs/sugar-datastore
 
 Files: *
 Copyright: 2007, ObjectRealms, LLC
