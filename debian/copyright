@@ -68,7 +68,7 @@ License: GPL-2+
  General Public License for more details.
 Comment:
  On Debian systems the 'GNU General Public License' version 2 is located
- in '/usr/share/common-licenses/GPL'.
+ in '/usr/share/common-licenses/GPL-2'.
  .
  You should have received a copy of the 'GNU General Public License'
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
