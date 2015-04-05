@@ -49,3 +49,13 @@ CDBS_REPLACES_DEFAULT = $(pkgbase)
 # (unneeded since Squeeze: can be dropped after Squeeze+1)
 CDBS_BREAKS_DEFAULT += , python-olpc-datastore
 CDBS_REPLACES_DEFAULT += , python-olpc-datastore
+
+# Ensure optimal hash-bang + dependency for scripts (see Python Policy)
+#  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
+CDBS_DEPENDS_sugar-session-$(pkgbranch) +=, python
+CDBS_DEPENDS_sugar-tools-$(pkgbranch) +=, python
+binary-fixup/sugar-session-$(pkgbranch)::
+binary-fixup/sugar-%-$(pkg)::
+	egrep -r -l -Z '^#! ?/usr/bin/(env )?python[[:print:]]*$$' \
+		debian/$(cdbs_curpkg)/usr/bin/* \
+		| xargs -r -0 perl -pi -e 's,^#! ?/usr/bin/(env )?python[[:print:]]*$$,#!/usr/bin/$(strip $(or $(cdbs_curpythonruntime),$(cdbs_python_binary))),'
