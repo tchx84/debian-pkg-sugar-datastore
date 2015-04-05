@@ -47,11 +47,6 @@ CDBS_PROVIDES_$(pkg) = $(pkgbase)
 CDBS_CONFLICTS_$(pkg) = $(pkgbase)
 CDBS_REPLACES_$(pkg) = $(pkgbase)
 
-# Transitional quirk: python-olpc-datastore renamed to python-carquinyol
-# (unneeded since Squeeze: can be dropped after Squeeze+1)
-CDBS_BREAKS_$(pkg) +=, python-olpc-datastore
-CDBS_REPLACES_$(pkg) +=, python-olpc-datastore
-
 # Ensure optimal hash-bang + dependency for scripts (see Python Policy)
 #  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
 CDBS_DEPENDS_$(pkg) +=, python
