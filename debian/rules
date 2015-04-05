@@ -37,20 +37,20 @@ DEB_UPSTREAM_URL = http://download.sugarlabs.org/sources/sucrose/glucose/sugar-d
 DEB_UPSTREAM_TARBALL_EXTENSION = tar.xz
 
 # Needed (always/seldom) at runtime
-CDBS_DEPENDS_DEFAULT = python-gi, python-dbus, python-xapian, python-sugar3
-CDBS_DEPENDS_DEFAULT +=, gir1.2-glib-2.0
-CDBS_RECOMMENDS_DEFAULT = dbus
-CDBS_SUGGESTS_DEFAULT = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
+CDBS_DEPENDS_$(pkg) = python-gi, python-dbus, python-xapian, python-sugar3
+CDBS_DEPENDS_$(pkg) +=, gir1.2-glib-2.0
+CDBS_RECOMMENDS_$(pkg) = dbus
+CDBS_SUGGESTS_$(pkg) = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
 
 # Ensure only one variant is installed at a time (Debian Policy 7.6.2)
-CDBS_PROVIDES_DEFAULT = $(pkgbase)
-CDBS_CONFLICTS_DEFAULT = $(pkgbase)
-CDBS_REPLACES_DEFAULT = $(pkgbase)
+CDBS_PROVIDES_$(pkg) = $(pkgbase)
+CDBS_CONFLICTS_$(pkg) = $(pkgbase)
+CDBS_REPLACES_$(pkg) = $(pkgbase)
 
 # Transitional quirk: python-olpc-datastore renamed to python-carquinyol
 # (unneeded since Squeeze: can be dropped after Squeeze+1)
-CDBS_BREAKS_DEFAULT += , python-olpc-datastore
-CDBS_REPLACES_DEFAULT += , python-olpc-datastore
+CDBS_BREAKS_$(pkg) +=, python-olpc-datastore
+CDBS_REPLACES_$(pkg) +=, python-olpc-datastore
 
 # Ensure optimal hash-bang + dependency for scripts (see Python Policy)
 #  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
