@@ -40,7 +40,6 @@ DEB_UPSTREAM_TARBALL_EXTENSION = tar.xz
 CDBS_DEPENDS_$(pkg) = python-gi, python-dbus, python-xapian, python-sugar3
 CDBS_DEPENDS_$(pkg) +=, gir1.2-glib-2.0
 CDBS_RECOMMENDS_$(pkg) = dbus
-CDBS_SUGGESTS_$(pkg) = sugar-$(pkgbranch), poppler-utils | xpdf-utils, abiword | abiword-gnome
 
 # Ensure only one variant is installed at a time (Debian Policy 7.6.2)
 CDBS_PROVIDES_$(pkg) = $(pkgbase)
