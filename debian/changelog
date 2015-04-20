@@ -1,9 +1,10 @@
-sugar-datastore-0.104 (0.104.1-3) UNRELEASED; urgency=medium
+sugar-datastore-0.104 (0.104.1-3) unstable; urgency=medium
 
   * Fix stop suggest sugar-* poppler-utils/xpdf-utils or abiword: Unused
     since 0.8.1 (i.e. almost forever).
+  * Move packaging to Debian Sugar Team.
 
- -- Jonas Smedegaard <dr@jones.dk>  Fri, 10 Apr 2015 11:38:39 +0200
+ -- Jonas Smedegaard <dr@jones.dk>  Mon, 20 Apr 2015 13:52:37 +0200
 
 sugar-datastore-0.104 (0.104.1-2) experimental; urgency=medium
 
