@@ -1,4 +1,4 @@
-Source: sugar-datastore-0.105
+Source: sugar-datastore-0.104
 Section: python
 Priority: optional
 Maintainer: Debian Sugar Team <pkg-sugar-devel@lists.alioth.debian.org>
@@ -17,7 +17,7 @@ Vcs-Browser: https://anonscm.debian.org/cgit/pkg-sugar/sugar-datastore.git
 Homepage: http://wiki.sugarlabs.org/go/Sugar
 XS-Python-Version: >= 2.7
 
-Package: python-carquinyol-0.105
+Package: python-carquinyol-0.104
 Architecture: any
 Depends: ${cdbs:Depends},
  ${misc:Depends},
