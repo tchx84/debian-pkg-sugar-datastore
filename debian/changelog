@@ -1,11 +1,15 @@
-sugar-datastore (0.104.1-5) UNRELEASED; urgency=medium
+sugar-datastore (0.105.2-1) experimental; urgency=medium
 
+  [ upstream ]
+  * New release(s).
+
+  [ Jonas Smedegaard ]
   * Drop branch from source and binary package.
   * Prepare for new major branch:
     + Switch packaging git branch.
     + Have watch file track any branch.
 
- -- Jonas Smedegaard <dr@jones.dk>  Sun, 14 Jun 2015 18:00:49 -0500
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 14 Jun 2015 18:19:59 -0500
 
 sugar-datastore-0.104 (0.104.1-4) unstable; urgency=medium
 

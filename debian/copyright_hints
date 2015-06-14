@@ -17,7 +17,6 @@ Files: AUTHORS
  debian/compat
  debian/control
  debian/control.in
- debian/control.in.in
  debian/gbp.conf
  debian/source/format
  debian/source/lintian-overrides
