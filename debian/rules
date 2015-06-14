@@ -16,21 +16,13 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-# These need to be declared/run before CDBS includes
-DEB_BUILDDIR = build
-debian/control:: debian/control.in
-DEB_PHONY_RULES += debian/control.in
-debian/control.in::
-	sed -e 's/__BRANCH__/$(pkgbranch)/g' <debian/control.in.in >debian/control.in
-
 include /usr/share/cdbs/1/rules/upstream-tarball.mk
 include /usr/share/cdbs/1/rules/utils.mk
 include /usr/share/cdbs/1/class/python-autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 
-pkgbase = python-carquinyol
 pkgbranch = $(basename $(DEB_UPSTREAM_VERSION))
-pkg = $(pkgbase)-$(pkgbranch)
+pkg = python-carquinyol
 
 # Adapt packaging in maintainer mode when targeting experimental branch:
 #  * Switch git packaging branch
@@ -49,7 +41,7 @@ clean::
 		debian/gbp.conf
 endif
 
-DEB_UPSTREAM_PACKAGE = $(DEB_SOURCE_PACKAGE:%-$(pkgbranch)=%)
+DEB_UPSTREAM_PACKAGE = $(DEB_SOURCE_PACKAGE)
 DEB_UPSTREAM_URL = http://download.sugarlabs.org/sources/sucrose/glucose/sugar-datastore
 DEB_UPSTREAM_TARBALL_EXTENSION = tar.xz
 
@@ -57,11 +49,6 @@ DEB_UPSTREAM_TARBALL_EXTENSION = tar.xz
 CDBS_DEPENDS_$(pkg) = python-gi, python-dbus, python-xapian, python-sugar3
 CDBS_DEPENDS_$(pkg) +=, gir1.2-glib-2.0
 CDBS_RECOMMENDS_$(pkg) = dbus
-
-# Ensure only one variant is installed at a time (Debian Policy 7.6.2)
-CDBS_PROVIDES_$(pkg) = $(pkgbase)
-CDBS_CONFLICTS_$(pkg) = $(pkgbase)
-CDBS_REPLACES_$(pkg) = $(pkgbase)
 
 # Ensure optimal hash-bang + dependency for scripts (see Python Policy)
 #  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
