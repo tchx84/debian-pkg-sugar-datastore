@@ -29,7 +29,7 @@ include /usr/share/cdbs/1/class/python-autotools.mk
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 pkgbase = python-carquinyol
-pkgbranch = $(lastword $(subst -,$(space),$(DEB_SOURCE_PACKAGE)))
+pkgbranch = $(basename $(DEB_UPSTREAM_VERSION))
 pkg = $(pkgbase)-$(pkgbranch)
 
 # Adapt packaging in maintainer mode when targeting experimental branch:
