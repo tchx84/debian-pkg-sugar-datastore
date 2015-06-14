@@ -53,8 +53,6 @@ CDBS_RECOMMENDS_$(pkg) = dbus
 # Ensure optimal hash-bang + dependency for scripts (see Python Policy)
 #  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
 CDBS_DEPENDS_$(pkg) +=, python
-CDBS_DEPENDS_$(pkg) +=, python
-binary-fixup/$(pkg)::
 binary-fixup/$(pkg)::
 	egrep -r -l -Z '^#! ?/usr/bin/(env )?python[[:print:]]*$$' \
 		debian/$(cdbs_curpkg)/usr/bin/* \
