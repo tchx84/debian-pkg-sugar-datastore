@@ -10,6 +10,21 @@ sugar-datastore-0.104 (0.105.1-1~tch1) trusty; urgency=medium
 
  -- Martin Abente Lahaye <tch@tch>  Fri, 22 May 2015 11:58:25 -0400
 
+sugar-datastore-0.104 (0.104.1-4) unstable; urgency=medium
+
+  * Modernize short and long description.
+  * Update copyright info:
+    + Use License-Grant and License-Reference fields.
+    Thanks to Ben Finney.
+  * Add lintian overrides regarding license in License-Reference field.
+    See bug#786450.
+  * Adapt packaging in maintainer mode when targeting experimental:
+    + Switch git packaging branch.
+    + Track any release (else only current branch).
+  * Modernize git-buildpackage config: Avoid "git-" prefix.
+
+ -- Jonas Smedegaard <dr@jones.dk>  Sun, 14 Jun 2015 17:08:15 -0500
+
 sugar-datastore-0.104 (0.104.1-3) unstable; urgency=medium
 
   * Fix stop suggest sugar-* poppler-utils/xpdf-utils or abiword: Unused
