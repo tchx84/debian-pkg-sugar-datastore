@@ -1,10 +1,11 @@
-sugar-datastore (0.104.1-6) UNRELEASED; urgency=medium
+sugar-datastore (0.104.1-6) unstable; urgency=medium
 
   * Fix limit watch file to current branch.
   * Bump debhelper compatibility level to 9.
   * Add lintian override regarding debhelper 9.
+  * Relax watch file to cover any compression suffix.
 
- -- Jonas Smedegaard <dr@jones.dk>  Sat, 27 Jun 2015 11:16:19 -0500
+ -- Jonas Smedegaard <dr@jones.dk>  Thu, 02 Jul 2015 18:35:17 -0500
 
 sugar-datastore (0.104.1-5) unstable; urgency=medium
 
