@@ -1,3 +1,9 @@
+sugar-datastore (0.106.0-2~0tch1) trusty; urgency=medium
+
+  * Avoid conflicts with older packages.
+
+ -- Martin Abente Lahaye <tch@sugarlabs.org>  Thu, 23 Jul 2015 10:11:26 -0400
+
 sugar-datastore (0.106.0-1) unstable; urgency=medium
 
   [ upstream ]
