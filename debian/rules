@@ -60,6 +60,16 @@ CDBS_RECOMMENDS_$(pkg) = dbus
 # Ensure optimal hash-bang + dependency for scripts (see Python Policy)
 #  * TODO: drop cdbs_python_binary fallback when cdbs 0.5 is stable
 CDBS_DEPENDS_$(pkg) +=, python
+
+# Replace previous package names to avoid conflicts
+older-datastore = python-carquinyol-0.88
+older-datastore +=, python-carquinyol-0.96
+older-datastore +=, python-carquinyol-0.98
+older-datastore +=, python-carquinyol-0.104
+CDBS_PROVIDES_$(pkg) +=, $(older-datastore)
+CDBS_REPLACES_$(pkg) +=, $(older-datastore)
+CDBS_CONFLICTS_$(pkg) +=, $(older-datastore)
+
 binary-fixup/$(pkg)::
 	egrep -r -l -Z '^#! ?/usr/bin/(env )?python[[:print:]]*$$' \
 		debian/$(cdbs_curpkg)/usr/bin/* \
