@@ -19,7 +19,10 @@ Depends: ${cdbs:Depends},
  ${shlibs:Depends}
 Recommends: ${cdbs:Recommends}
 Suggests: ${cdbs:Suggests}
-Provides: ${python:Provides}
+Provides: ${cdbs:Provides},
+ ${python:Provides}
+Replaces: ${cdbs:Replaces}
+Conflicts: ${cdbs:Conflicts}
 Description: Sugar Learning Platform - datastore
  Sugar Learning Platform promotes collaborative learning through Sugar
  Activities that encourage critical thinking, the heart of a quality

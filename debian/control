@@ -4,7 +4,7 @@ Priority: optional
 Maintainer: Debian Sugar Team <pkg-sugar-devel@lists.alioth.debian.org>
 Uploaders: Jonas Smedegaard <dr@jones.dk>,
  Santiago Ruano Rincón <santiago@debian.org>
-Build-Depends: cdbs (>= 0.4.90~),
+Build-Depends: cdbs (>= 0.4.97~),
  autotools-dev,
  devscripts,
  python,
@@ -25,7 +25,10 @@ Depends: ${cdbs:Depends},
  ${shlibs:Depends}
 Recommends: ${cdbs:Recommends}
 Suggests: ${cdbs:Suggests}
-Provides: ${python:Provides}
+Provides: ${cdbs:Provides},
+ ${python:Provides}
+Replaces: ${cdbs:Replaces}
+Conflicts: ${cdbs:Conflicts}
 Description: Sugar Learning Platform - datastore
  Sugar Learning Platform promotes collaborative learning through Sugar
  Activities that encourage critical thinking, the heart of a quality
